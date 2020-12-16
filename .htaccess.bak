@@ -1,0 +1,11 @@
+# AddDefaultCharset UTF-8
+ 
+RewriteEngine on
+RewriteBase /modul-133/Praxisarbeit/
+ 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.php$ [NC]
+ 
+# RewriteRule ^$ ../ [L,QSA]
+# RewriteRule ^service/(.*)/?$ index.php?service=$1 [L,QSA]
