@@ -2,6 +2,17 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+
+/**
+ * Datebbank Klasse
+ * 
+ * Diese Klasse ist die Schnittstelle für sämtliche Datenbank-Aufrufe.
+ * Sie automatisiert den Prozess und enthält Konfigurationen.
+ * 
+ * Falls keine Konfiguration vorhanden ist wird diese getriggert und muss eingereicht werden.
+ * 
+ * Beim entfernen der Datei `migration.lock` wird die Datenbank erneust befüllt, bzw resetted.
+ */
 class DB
 {
     private static $_servername = "localhost";
@@ -47,7 +58,13 @@ class DB
         }
         return DB::$_conn;
     }
-
+    /**
+     * Migration
+     * 
+     * Migriert alle SQL-Dateien vom `sql/creates` & `sql/bundle` Ordner auf die Datenbank.
+     * 
+     * @return boolean resultat der Migration 
+     */
     private static function migrate()
     {
         DB::$_migrating = true;
@@ -83,12 +100,24 @@ class DB
         }
         return $result;
     }
-
+    /**
+     * Migrations-Check
+     * 
+     * Checkt ob die Migration durch ist.
+     * 
+     * @return boolean migration
+     */
     public static function checkMigration()
     {
         return DB::migrate();
     }
 
+    /**
+     * Statement-Creator
+     * 
+     * @param string SQL-Commandos
+     * @return PDOStatement statement vom PDO.
+     */
     protected static function stmt(string $sql)
     {
         $conn = DB::connection();
@@ -96,6 +125,13 @@ class DB
         return $stmt;
     }
 
+    /**
+     * SQL-Insert
+     * 
+     * @param string SQL-Commandos
+     * @param array SQL-Werte
+     * @return boolean ergebnis des Inserts.
+     */
     protected static function insert(string $sql, array $array)
     {
         return DB::stmt($sql)->execute($array);

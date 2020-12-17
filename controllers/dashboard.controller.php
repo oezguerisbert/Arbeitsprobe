@@ -1,7 +1,14 @@
 <?php
 require_once './repositories/User.repo.php';
 require_once './repositories/Auftrag.repo.php';
-// require_once './classes/User.class.php';
+
+/*
+In diesem Controller wird die Logik für das Dashboard übernommen.
+
+ - LoginCheck
+ - initialisierung der `$auftraege`-Variablen
+
+*/
 if (isset($_SESSION['userid'])) {
     $user = UserRepository::find($_SESSION['userid']);
     if (!$user) {
@@ -16,6 +23,11 @@ if (isset($_SESSION['userid'])) {
 } else {
     header("Location: ./");
 }
+
+
+/**
+ * Erstellt alle Aufträge für die Auflistung
+ */
 function printAuftraege()
 {
     global $auftraege;

@@ -7,6 +7,15 @@ require_once './repositories/Service.repo.php';
 require_once './repositories/Priority.repo.php';
 require_once './classes/DB.class.php';
 
+
+/*
+In diesem Controller wird die Logik für das Ski-Serviceformular übernommen.
+
+ - LoginCheck
+ - Datenbank Resultat nach der Anfrage
+
+*/
+
 if (isset($_SESSION['userid'])) {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prio = $_POST['prio'];
@@ -20,6 +29,9 @@ if (isset($_SESSION['userid'])) {
     header("Location: ./login.php?redirect=" . "formular.php?service=$service");
 }
 
+/**
+ * Erstellt die Alerts für das Resultat der Anfrage.
+ */
 function printResult()
 {
     global $db_query_result;

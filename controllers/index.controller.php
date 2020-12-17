@@ -3,6 +3,10 @@ require_once './classes/DB.class.php';
 require_once './repositories/Service.repo.php';
 require_once './repositories/User.repo.php';
 require_once './classes/User.class.php';
+
+/**
+ * Erstellt die Logout(+Dashboard)/Login-Buttons
+ */
 function printUserOptions(){
     if (!isset($_SESSION['userid'])) {
         ?>

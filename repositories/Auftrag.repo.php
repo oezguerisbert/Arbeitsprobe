@@ -3,8 +3,18 @@ require_once "./classes/Auftrag.class.php";
 require_once "./classes/Modus.class.php";
 require_once "./repositories/Base.repo.php";
 
+/**
+ * Auftrag Repository
+ */
 class AuftragRepository extends BaseRepository
 {
+    /**
+     * Update Statement
+     * 
+     * @param int $id id vom Auftrag
+     * @param string $col Spalte
+     * @param mixed $value Wert
+     */
     public static function update(int $id, string $col, $value)
     {
         $stmt = AuftragRepository::stmt("UPDATE kxi_auftraege SET $col = :value WHERE id = :id;");
@@ -12,10 +22,24 @@ class AuftragRepository extends BaseRepository
         $stmt->execute(array("id" => $id, "value" => $value));
         return $stmt->fetch();
     }
+
+    /**
+     * Setzt die Sichtbarkeit des Auftrags.
+     * 
+     * @param int $id id vom Auftrag
+     * @param boolean $b sichtbarkeit `true` bzw `false`
+     */
     public static function setVisibility(int $id, bool $b)
     {
         return AuftragRepository::update($id, "visible", $b ? 1 : 0);
     }
+
+    /**
+     * Updated den Modus
+     * 
+     * @param int $id id des Auftrags
+     * @param string $modus modus-name
+     */
     public static function updateModus(int $id, string $modus)
     {
         $modus = ModusRepository::findByKuerzel($modus);

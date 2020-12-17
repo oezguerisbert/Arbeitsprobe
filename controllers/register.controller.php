@@ -1,7 +1,9 @@
 <?php
 include_once './incs/checkInput.func.inc.php';
 include_once './repositories/User.repo.php';
-
+/**
+ * Erstellt die Alerts für den Register-Request
+ */
 function printResult()
 {
 

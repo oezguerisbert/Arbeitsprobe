@@ -1,12 +1,12 @@
 <?php
 /**
- * Crates a Bootstrap-Card
+ * ERstellt Bootstrap-Karten
  *
- * @param string $imageLink
- * @param string $title
- * @param string $description
+ * @param string $imageLink bild-url
+ * @param string $title titel
+ * @param string $description beschreibung
  *
- * @return string precreated card as html
+ * @return string HTML
  */
 function createCard(string $imageLink, string $title, string $description = "", string $buttonText = "Open", string $cardLink = "")
 {
@@ -27,11 +27,11 @@ function createCard(string $imageLink, string $title, string $description = "", 
         ";
 }
 /**
- * Crates a Service-Rows-Card
+ * Erstellt eine Service-Rows-Karte
  *
- * @param array $array
+ * @param array $services service-array
  *
- * @return string precreated cards as html
+ * @return string HTML
  */
 function createServices(array $services)
 {

@@ -3,6 +3,9 @@ include_once './incs/createAlert.func.inc.php';
 include_once './incs/createInput.func.inc.php';
 $login_blocked = false;
 
+/**
+ * Erstellt die Alerts für den Login-Request
+ */
 function printResult()
 {
 

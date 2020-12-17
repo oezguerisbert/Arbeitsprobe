@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * Erstellt die Boots-Alerts
+ * 
+ * 
+ * @param string type
+ * @param string titel
+ * @param array alerts-array
+ * @return string HTML-Bootstrap-Alert
+ */
 function createAlert(string $type, string $title, array $alerts) {
     $d = "<div class=\"alert alert-$type\" role=\"alert\">";
     $d .= "<h5>$title</h5>";

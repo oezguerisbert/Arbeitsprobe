@@ -1,4 +1,12 @@
 <?php
+/**
+ * Erstellt die Prioritätetn auf Bootstrap-Basis
+ * 
+ * @param array $priorities prioritäten
+ * @param string $selected [optional] ausgewählte priorität
+ * 
+ * @return string HTML
+ */
 function createPriorities(array $priorities, string $selected = "")
 {
     $d = "";
