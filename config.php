@@ -7,7 +7,7 @@ if (!file_exists("./config.json")) {
             "port" => 3306,
             "user" => "root",
             "password" => "",
-            "dbname" => "modul133",
+            "dbname" => "oezguer_isbert_arbeitsprobe",
             "migrate" => true,
         ),
     );
@@ -68,7 +68,7 @@ include './incs/bootstrap.head.inc.php';
     <?php
 die();
 } else {
-    if ($_SERVER['REQUEST_METHOD'] === "GET" && !in_array($_SERVER['REQUEST_URI'], array("/modul-133/Praxisarbeit/", "/modul-133/Praxisarbeit/index.php"))) {
+    if ($_SERVER['REQUEST_METHOD'] === "GET" && !in_array($_SERVER['REQUEST_URI'], array("/Arbeitsprobe/", "/Arbeitsprobe/index.php"))) {
         header("Location: ./");
     }
 }
