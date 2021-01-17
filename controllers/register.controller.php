@@ -20,6 +20,8 @@ function printResult()
         $data["vorname"] = htmlspecialchars($_POST['vorname']);
         $data["nachname"] = htmlspecialchars($_POST['nachname']);
         $data["gender"] = htmlspecialchars($_POST['gender']);
+        $data["birthdate"] = date('Y-m-d',strtotime($_POST['birthdate']));
+        $data["height"] = intval(htmlspecialchars($_POST['height']));
         $data["email"] = htmlspecialchars($_POST['email']);
         $data["phone"] = htmlspecialchars($_POST['phone']);
         $data["password"] = hash("sha256", $_POST['password']);

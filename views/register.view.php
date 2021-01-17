@@ -22,6 +22,8 @@ include_once './incs/createSelect.func.inc.php';
                 <?=createInput("vorname", (isset($data_ok) && !$data_ok) ? $data["vorname"] : "", "text", null, true);?>
                 <?=createInput("nachname", (isset($data_ok) && !$data_ok) ? $data["nachname"] : "", "text", null, true);?>
                 <?=createSelect("gender", (isset($data_ok) && !$data_ok) ? $data["gender"] : "", array("male", "female", "other"), "Male / Female / Other", true);?>
+                <?=createInput("height", (isset($data_ok) && !$data_ok) ? $data["height"] : "", "number", "Höhe in cm", true);?>
+                <?=createInput("birthdate", (isset($data_ok) && !$data_ok) ? $data["birthdate"] : "", "date", null, true);?>
                 <?=createInput("phone", (isset($data_ok) && !$data_ok) ? $data["phone"] : "", "phone", "Ihre Telefonnummer wird nicht weitergegeben.", true);?>
                 <?=createInput("email", (isset($data_ok) && !$data_ok) ? $data["email"] : "", "email", "Ihre E-Mail wird nicht weitergegeben.", true);?>
                 <?=createInput("password", (isset($data_ok) && !$data_ok) ? $data["password"] : "", "password", null, true);?>

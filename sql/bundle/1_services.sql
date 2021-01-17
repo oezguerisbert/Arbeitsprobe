@@ -14,38 +14,38 @@ INSERT INTO
   kxi_services(`kuerzel`, `title`, `price`, `description`)
 VALUES
   (
-    "klein",
-    "Kleiner Service",
-    50.00,
-    "Unser kleiner Service beinhaltet die einfachen Einstellungen"
-  ),
-  (
-    "gross",
-    "Grosser Service",
+    "allround",
+    "Allround-Skis",
     70.00,
-    "Unser grosser Service beinhaltet alle Einstellungen"
+    "Unsere Allround-Skis für jeden."
   ),
   (
-    "rennski",
-    "Rennski-Service",
+    "slalom",
+    "Slalom-Skis",
+    70.00,
+    "Diese Skis sind perfekt fürs Slalom fahren!"
+  ),
+  (
+    "amc",
+    "All-Mountain-Carving",
     150.00,
-    "Das Komplettpacket"
+    "Diese Skis sind für fortgeschrittene Leute gedacht, viel Spaß!"
   ),
   (
-    "montage",
-    "Bindung montieren und einstellen",
+    "freeride",
+    "Freeride-Skis",
     20.00,
-    "Eine sehr gute Montage des Equipments"
+    "Free Ride Skis sind für Profi-Ski fahrer ☺"
   ),
   (
-    "fell",
-    "Fell zuschneiden",
+    "goofy",
+    "Goofy-Snowboard",
     15.00,
-    "Das zuschneiden des Fells für das perfekte Feeling"
+    "Ein Goofy Snowboard für chillige snowboard Aktivitäten!"
   ),
   (
-    "wachs",
-    "Heisswachsen",
+    "regular",
+    "Regular-Snowboard",
     15.00,
-    "Mit hochprofessionellem Wachs wird ihr Equipment versorgt"
+    "Reguläre Snowboards für jederman/-frau 🤩"
   );
