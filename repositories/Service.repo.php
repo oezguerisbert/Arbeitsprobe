@@ -16,14 +16,17 @@ class ServiceRepository extends BaseRepository
      */
     public static function add(array $information)
     {
-        return ServiceRepository::insert(
+        $result = BaseRepository::run(
             "INSERT INTO kxi_auftraege(prioid, serviceid, userid)
-            VALUE(:prioid, :serviceid, :uid)",
+            VALUE(:prioid, :serviceid, :uid)", 
             array(
                 "serviceid" => ServiceRepository::findByKuerzel($information['service'])->getID(),
                 "prioid" => PriorityRepository::findByKuerzel($information['priority'])->getID(),
                 "uid" => $information['userid'],
-            )
+            ),
+            null,
+            ""
         );
+        return $result;
     }
 }

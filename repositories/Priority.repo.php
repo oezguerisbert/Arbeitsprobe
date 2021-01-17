@@ -16,10 +16,14 @@ class PriorityRepository extends BaseRepository
      */
     public static function findAll()
     {
-        $stmt = PriorityRepository::stmt("SELECT * FROM kxi_priorities;");
-        $stmt->setFetchMode(PDO::FETCH_CLASS, PriorityRepository::$fetch_class);
-        $stmt->execute();
-        return $stmt->fetchAll();
+        
+        $result = BaseRepository::run(
+            "SELECT * FROM kxi_priorities;", 
+            null,
+            str_replace("Repository", "", get_called_class()),
+            "fetchAll"
+        );
+        return $result;
     }
 
     /**
@@ -30,10 +34,13 @@ class PriorityRepository extends BaseRepository
      */
     public static function findByKuerzel(string $kuerzel)
     {
-        $stmt = PriorityRepository::stmt("SELECT * FROM kxi_priorities WHERE kuerzel = :kuerzel LIMIT 1;");
-        $stmt->setFetchMode(PDO::FETCH_CLASS, PriorityRepository::$fetch_class);
-        $stmt->execute(array("kuerzel" => $kuerzel));
-        return $stmt->fetch();
+        $result = BaseRepository::run(
+            "SELECT * FROM kxi_priorities WHERE kuerzel = :kuerzel LIMIT 1;", 
+            array("kuerzel" => $kuerzel),
+            str_replace("Repository", "", get_called_class()),
+            "fetch"
+        );
+        return $result;
     }
 
     /**
@@ -44,9 +51,12 @@ class PriorityRepository extends BaseRepository
      */
     public static function find(int $id)
     {
-        $stmt = PriorityRepository::stmt("SELECT * FROM kxi_priorities WHERE id = :id;");
-        $stmt->setFetchMode(PDO::FETCH_CLASS, PriorityRepository::$fetch_class);
-        $stmt->execute(array("id" => $id));
-        return $stmt->fetch();
+        $result = BaseRepository::run(
+            "SELECT * FROM kxi_priorities WHERE id = :id;", 
+            array("id" => $id),
+            str_replace("Repository", "", get_called_class()),
+            "fetch"
+        );
+        return $result;
     }
 }

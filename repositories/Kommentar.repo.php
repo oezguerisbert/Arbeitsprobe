@@ -17,11 +17,13 @@ class KommentarRepository extends BaseRepository
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
 
-        $stmt = KommentarRepository::stmt(file_get_contents("./sql/statements/$filename"));
-        $stmt->setFetchMode(PDO::FETCH_CLASS, str_replace("Repository", "", get_called_class()));
-        $stmt->execute(array("auftragid" => $auftragid));
-        $kommentare = $stmt->fetchAll();
-        return $kommentare;
+        $result = BaseRepository::run(
+            file_get_contents("./sql/statements/$filename"), 
+            array("auftragid" => $auftragid),
+            str_replace("Repository", "", get_called_class()),
+            "fetchAll"
+        );
+        return $result;
     }
     /**
      * Fügt einen neuen Kommentar hinzu
@@ -34,9 +36,13 @@ class KommentarRepository extends BaseRepository
     public static function add(int $userid, int $auftragid, string $content)
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
-        return UserRepository::insert(
-            file_get_contents("./sql/statements/$filename"),
-            array("userid" => $userid, "auftragid" => $auftragid, "content" => htmlspecialchars($content))
+
+        $result = BaseRepository::run(
+            file_get_contents("./sql/statements/$filename"), 
+            array("userid" => $userid, "auftragid" => $auftragid, "content" => htmlspecialchars($content)),
+            str_replace("Repository", "", get_called_class()),
+            ""
         );
+        return $result;
     }
 }

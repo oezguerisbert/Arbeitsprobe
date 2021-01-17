@@ -1,6 +1,7 @@
 <?php
 include_once './incs/createInput.func.inc.php';
 include_once './incs/createAlert.func.inc.php';
+include_once './incs/createSelect.func.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +21,7 @@ include_once './incs/createAlert.func.inc.php';
                 <?=createInput("username", (isset($data_ok) && !$data_ok) ? $data["username"] : "", "text", null, true);?>
                 <?=createInput("vorname", (isset($data_ok) && !$data_ok) ? $data["vorname"] : "", "text", null, true);?>
                 <?=createInput("nachname", (isset($data_ok) && !$data_ok) ? $data["nachname"] : "", "text", null, true);?>
+                <?=createSelect("gender", (isset($data_ok) && !$data_ok) ? $data["gender"] : "", array("male", "female", "other"), "Male / Female / Other", true);?>
                 <?=createInput("phone", (isset($data_ok) && !$data_ok) ? $data["phone"] : "", "phone", "Ihre Telefonnummer wird nicht weitergegeben.", true);?>
                 <?=createInput("email", (isset($data_ok) && !$data_ok) ? $data["email"] : "", "email", "Ihre E-Mail wird nicht weitergegeben.", true);?>
                 <?=createInput("password", (isset($data_ok) && !$data_ok) ? $data["password"] : "", "password", null, true);?>

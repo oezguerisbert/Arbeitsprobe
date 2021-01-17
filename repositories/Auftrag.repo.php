@@ -17,10 +17,13 @@ class AuftragRepository extends BaseRepository
      */
     public static function update(int $id, string $col, $value)
     {
-        $stmt = AuftragRepository::stmt("UPDATE kxi_auftraege SET $col = :value WHERE id = :id;");
-        $stmt->setFetchMode(PDO::FETCH_CLASS, str_replace("Repository", "", get_called_class()));
-        $stmt->execute(array("id" => $id, "value" => $value));
-        return $stmt->fetch();
+        $result = BaseRepository::run(
+            "UPDATE kxi_auftraege SET $col = :value WHERE id = :id;", 
+            array("id" => $id, "value" => $value),
+            str_replace("Repository", "", get_called_class()),
+            "fetch"
+        );
+        return $result;
     }
 
     /**

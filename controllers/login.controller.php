@@ -19,23 +19,9 @@ function printResult()
             $user = UserRepository::checkLogin($data);
             if ($user) {
                 $_SESSION['userid'] = $user->getID();
-                header("Location: ./" . ($_GET['redirect'] ?? ""));
+                print "<script>document.location.href = './';</script>";
             } else {
                 $data_errors = array("password" => "Please retry, user/password wrong.");
-                $_SESSION['loginattempts'] = isset($_SESSION['loginattempts']) ? $_SESSION['loginattempts'] + 1 : 1;
-                if (!isset($_SESSION['lastloginattempt'])) {
-                    $data_errors = array("blockout" => "You tried to login too many times. Take a break!");
-                } else {
-                    if ($_SESSION['loginattempts'] >= 3 && strtotime("now") - $_SESSION['lastloginattempt'] <= 50) {
-                        $data_errors = array("blockout" => "You are blocked from logging in!");
-                        $login_blocked = true;
-                    } else {
-
-                        $_SESSION['loginattempts'] = 0;
-                    }
-                }
-                $_SESSION['lastloginattempt'] = strtotime("now");
-
             }
         }
 

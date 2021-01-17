@@ -46,6 +46,7 @@ class DB
                 // set the PDO error mode to exception
                 $_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $_conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                
                 DB::$_conn = $_conn;
                 if (!file_exists("./migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
                     DB::$_migrated = DB::migrate();
@@ -113,28 +114,41 @@ class DB
     }
 
     /**
-     * Statement-Creator
+     * Runs the Query in a transaction
      * 
-     * @param string SQL-Commandos
-     * @return PDOStatement statement vom PDO.
+     * @param string $sql
+     * @param array $array
      */
-    protected static function stmt(string $sql)
-    {
+    protected static function run(string $sql, array $values = null, string $fetchmode = null, $finalExecution = ""){
+        
         $conn = DB::connection();
-        $stmt = $conn->prepare($sql);
-        return $stmt;
-    }
+        $result = null;
+        try {
 
-    /**
-     * SQL-Insert
-     * 
-     * @param string SQL-Commandos
-     * @param array SQL-Werte
-     * @return boolean ergebnis des Inserts.
-     */
-    protected static function insert(string $sql, array $array)
-    {
-        return DB::stmt($sql)->execute($array);
+            $conn->beginTransaction();
+            $stmt = $conn->prepare($sql);
+            $result2 = null;
+            if($values !== null){
+                $result2 = $stmt->execute($values);
+            }else {
+                $result2 = $stmt->execute();
+            }
+            if($fetchmode !== null){
+                $stmt->setFetchMode(PDO::FETCH_CLASS, $fetchmode);
+            }
+            
+            if($finalExecution != ""){
+                $result = $stmt->$finalExecution();
+            }else {
+                $result = $result2;
+            }
+            
+            $conn->commit();
+        } catch (Excepion $e) {
+            $conn->rollBack();
+        }
+
+        return $result;
     }
 
 }

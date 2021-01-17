@@ -14,10 +14,13 @@ class BaseRepository extends DB
     public static function findAll()
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
-        $stmt = BaseRepository::stmt(file_get_contents("./sql/statements/$filename"));
-        $stmt->setFetchMode(PDO::FETCH_CLASS, str_replace("Repository", "", get_called_class()));
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $result = BaseRepository::run(
+            file_get_contents("./sql/statements/$filename"), 
+            null,
+            str_replace("Repository", "", get_called_class()),
+            "fetchAll"
+        );
+        return $result;
     }
 
     /**
@@ -28,10 +31,13 @@ class BaseRepository extends DB
     public static function find(int $id)
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
-        $stmt = BaseRepository::stmt(file_get_contents("./sql/statements/$filename"));
-        $stmt->setFetchMode(PDO::FETCH_CLASS, str_replace("Repository", "", get_called_class()));
-        $stmt->execute(array("id" => $id));
-        return $stmt->fetch();
+        $result = BaseRepository::run(
+            file_get_contents("./sql/statements/$filename"), 
+            array("id" => $id),
+            str_replace("Repository", "", get_called_class()),
+            "fetch"
+        );
+        return $result;
     }
 
     /**
@@ -42,10 +48,13 @@ class BaseRepository extends DB
     public static function findByKuerzel(string $kuerzel)
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
-        $stmt = BaseRepository::stmt(file_get_contents("./sql/statements/$filename"));
-        $stmt->setFetchMode(PDO::FETCH_CLASS, str_replace("Repository", "", get_called_class()));
-        $stmt->execute(array("kuerzel" => $kuerzel));
-        return $stmt->fetch();
+        $result = BaseRepository::run(
+            file_get_contents("./sql/statements/$filename"), 
+            array("kuerzel" => $kuerzel),
+            str_replace("Repository", "", get_called_class()),
+            "fetch"
+        );
+        return $result;
     }
 
     /**
@@ -55,9 +64,11 @@ class BaseRepository extends DB
     public static function create(array $options)
     {
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
-        return BaseRepository::insert(
+        
+        $result = BaseRepository::run(
             file_get_contents("./sql/statements/$filename"),
             $options
         );
+        return $result;
     }
 }
