@@ -1,6 +1,4 @@
 <?php
-require_once "./classes/User.class.php";
-require_once "./repositories/Base.repo.php";
 
 /**
  * User Repository

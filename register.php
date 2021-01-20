@@ -1,4 +1,5 @@
 <?php
 session_start();
-include_once './controllers/register.controller.php';
-include_once './views/register.view.php';
+require_once __DIR__.'/./incs/requirements.func.inc.php';
+include_once __DIR__.'/./controllers/register.controller.php';
+include_once __DIR__.'/./views/register.view.php';

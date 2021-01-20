@@ -1,6 +1,4 @@
 <?php
-require_once "./repositories/User.repo.php";
-require_once "./repositories/Auftrag.repo.php";
 
 /**
  * Kommentar Klasse

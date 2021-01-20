@@ -18,6 +18,7 @@ if (isset($_SESSION['userid'])) {
         header("Location: ./");
     }
 
+    $auftraege = AuftragRepository::findAll();
 } else {
     header("Location: ./");
 }
@@ -28,8 +29,7 @@ if (isset($_SESSION['userid'])) {
  */
 function printAuftraege()
 {
-    $auftraege = AuftragRepository::findAll();
-    var_dump($auftraege);
+    global $auftraege;
     foreach ($auftraege as $key => $auftrag) {
 
         echo $auftrag->toRow();

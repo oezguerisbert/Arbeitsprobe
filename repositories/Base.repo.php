@@ -1,5 +1,4 @@
 <?php
-require_once "./classes/DB.class.php";
 
 
 /**
@@ -7,17 +6,27 @@ require_once "./classes/DB.class.php";
  */
 class BaseRepository extends DB
 {
+
+    protected static function findSQLFile($filename){
+        $path = $_SERVER['DOCUMENT_ROOT']."/Arbeitsprobe/sql/statements/$filename";
+        if(file_exists($path)){
+            return $path;
+        }else {
+            throw new Error("File '$filename' does not exist!");
+        }
+    }
+
     /**
      * Findet alle Entities aus der Datenbank
      * @return mixed[] Entities
      */
     public static function findAll()
     {
-        $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
+        $className = str_replace("Repository", "", get_called_class());
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"), 
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
             null,
-            str_replace("Repository", "", get_called_class()),
+            $className,
             "fetchAll"
         );
         return $result;
@@ -30,11 +39,12 @@ class BaseRepository extends DB
      */
     public static function find(int $id)
     {
-        $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
+        $className = str_replace("Repository", "", get_called_class());
+        
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"), 
-            array("id" => $id),
-            str_replace("Repository", "", get_called_class()),
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
+            array(":id" => $id),
+            $className,
             "fetch"
         );
         return $result;
@@ -47,11 +57,12 @@ class BaseRepository extends DB
      */
     public static function findByKuerzel(string $kuerzel)
     {
-        $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
+        $className = str_replace("Repository", "", get_called_class());
+
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"), 
-            array("kuerzel" => $kuerzel),
-            str_replace("Repository", "", get_called_class()),
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
+            array(":kuerzel" => $kuerzel),
+            $className,
             "fetch"
         );
         return $result;
@@ -63,10 +74,12 @@ class BaseRepository extends DB
      */
     public static function create(array $options)
     {
+        $className = str_replace("Repository", "", get_called_class());
+
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
         
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"),
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
             $options
         );
         return $result;

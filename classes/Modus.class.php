@@ -1,7 +1,4 @@
 <?php
-require_once "./repositories/User.repo.php";
-require_once "./repositories/Service.repo.php";
-require_once "./repositories/Priority.repo.php";
 
 
 /**

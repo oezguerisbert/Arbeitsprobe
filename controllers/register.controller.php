@@ -30,7 +30,7 @@ function printResult()
 
         $db_query_result = UserRepository::create($data);
         if ($db_query_result) {
-            $_SESSION['userid'] = UserRepository::checkLogin(array("username" => htmlspecialchars($data['username']), "password" => $data['password']))->getID();
+            $_SESSION['userid'] = UserRepository::checkLogin(array(":username" => htmlspecialchars($data['username']), ":password" => $data['password']))->getID();
             echo "<script>document.location.href = '" . (isset($_GET['redirect']) ? $_GET['redirect'] : "./index.php") . "';</script>";
         } else if (isset($data_errors) && sizeof($data_errors) > 0) {
             echo createAlert("warning", "Opps!", $data_errors);

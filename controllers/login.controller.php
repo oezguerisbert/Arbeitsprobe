@@ -11,8 +11,8 @@ function printResult()
 
     if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $data = array(
-            "username" => $_POST['username'],
-            "password" => hash("sha256", $_POST['password']),
+            ":username" => $_POST['username'],
+            ":password" => hash("sha256", $_POST['password']),
         );
         $data_errors = checkInput($data);
         if (sizeof($data_errors) == 0) {

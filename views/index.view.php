@@ -1,5 +1,5 @@
 <?php
-require_once './incs/createServices.func.inc.php';
+require_once __DIR__.'/../incs/createServices.func.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ include './incs/bootstrap.head.inc.php';
             </div>
             <div class="row p-5"></div>
         </div>
-        <?php include './incs/footer.inc.php';?>
+        <?php include __DIR__.'/../incs/footer.inc.php';?>
     </div>
 </body>
 </html>

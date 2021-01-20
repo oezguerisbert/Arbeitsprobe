@@ -1,7 +1,4 @@
 <?php
-require_once "./classes/Kommentar.class.php";
-require_once "./repositories/Base.repo.php";
-
 /**
  * Kommentar Repository
  */
@@ -15,12 +12,12 @@ class KommentarRepository extends BaseRepository
      */
     public static function findAllByID(int $auftragid)
     {
-        $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
+        $className = str_replace("Repository", "", get_called_class());
 
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"), 
-            array("auftragid" => $auftragid),
-            str_replace("Repository", "", get_called_class()),
+            file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")), 
+            array(":auftragid" => $auftragid),
+            $className,
             "fetchAll"
         );
         return $result;
@@ -35,11 +32,12 @@ class KommentarRepository extends BaseRepository
      */
     public static function add(int $userid, int $auftragid, string $content)
     {
+        $className = str_replace("Repository", "", get_called_class());
         $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
 
         $result = BaseRepository::run(
-            file_get_contents("./sql/statements/$filename"), 
-            array("userid" => $userid, "auftragid" => $auftragid, "content" => htmlspecialchars($content)),
+            file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")), 
+            array(":userid" => $userid, ":auftragid" => $auftragid, ":content" => htmlspecialchars($content)),
             str_replace("Repository", "", get_called_class()),
             ""
         );

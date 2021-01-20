@@ -1,6 +1,4 @@
 <?php
-require_once "./repositories/Base.repo.php";
-require_once "./classes/Priority.class.php";
 
 /**
  * Priority Repository
@@ -36,7 +34,7 @@ class PriorityRepository extends BaseRepository
     {
         $result = BaseRepository::run(
             "SELECT * FROM kxi_priorities WHERE kuerzel = :kuerzel LIMIT 1;", 
-            array("kuerzel" => $kuerzel),
+            array(":kuerzel" => $kuerzel),
             str_replace("Repository", "", get_called_class()),
             "fetch"
         );
@@ -53,7 +51,7 @@ class PriorityRepository extends BaseRepository
     {
         $result = BaseRepository::run(
             "SELECT * FROM kxi_priorities WHERE id = :id;", 
-            array("id" => $id),
+            array(":id" => $id),
             str_replace("Repository", "", get_called_class()),
             "fetch"
         );

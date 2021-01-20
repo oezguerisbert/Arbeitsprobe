@@ -1,10 +1,6 @@
 <?php
 session_start();
-require_once './repositories/User.repo.php';
-require_once './classes/User.class.php';
-require_once './repositories/Auftrag.repo.php';
-require_once './repositories/Modus.repo.php';
-require_once './repositories/Kommentar.repo.php';
+require_once __DIR__.'/../incs/requirements.func.inc.php';
 if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
     header("Location: ./");
 } else {
@@ -33,7 +29,7 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KXI-Service</title>
     <?php
-include './incs/bootstrap.head.inc.php';
+include __DIR__.'/../incs/bootstrap.head.inc.php';
 ?>
     <link rel="stylesheet" href="./style.css" />
 </head>
@@ -43,8 +39,8 @@ include './incs/bootstrap.head.inc.php';
             <div class="row pl-3 pr-3 d-flex">
                 <h1>KXI</h1>
                 <div class="ml-auto options d-flex pt-3 pb-3">
-                    <a href="./dashboard.php" class="fas fa-compass fa-2x align-self-end ml-3 text-decoration-none"></a>
-                    <a href="./logout.php" class="fas fa-sign-out-alt fa-2x ml-3 align-self-end text-decoration-none"></a>
+                    <a href="../" class="fas fa-compass fa-2x align-self-end ml-3 text-decoration-none"></a>
+                    <a href="../logout.php" class="fas fa-sign-out-alt fa-2x ml-3 align-self-end text-decoration-none"></a>
                 </div>
             </div>
             <div class="row p-3 pt-5">

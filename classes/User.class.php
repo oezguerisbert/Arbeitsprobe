@@ -10,6 +10,9 @@ class User
     private $username;
     private $vorname;
     private $nachname;
+    private $gender;
+    private $birthdate;
+    private $height;
     private $email;
     private $phone;
     private $usertype = "user";
@@ -66,6 +69,30 @@ class User
     }
 
     /**
+     * Übergibt das Geschlecht des Nutzers
+     * @return string gender
+     */
+    public function getGender(){
+        return $this->gender;
+    }
+
+    /**
+     * Übergibt die Körpergrösse des Nutzers
+     * @return string gender
+     */
+    public function getHeight(){
+        return $this->height;
+    }
+
+    /**
+     * Übergibt das Geburtsdatum des Nutzers
+     * @return string gender
+     */
+    public function getBirthday(){
+        return $this->birthdate;
+    }
+
+    /**
      * Übergibt die Telefonnummer des Users
      * 
      * @return string telefonnummer
@@ -115,5 +142,23 @@ class User
     public static function getSupervisedUsertypes()
     {
         return array("admin", "moderator");
+    }
+
+    /**
+     * Übergibt ob der Nutzer ein Admin ist
+     * 
+     * @return boolean ist Admin
+     */
+    public function isAdmin(){
+        return $this->usertype === User::getSupervisedUsertypes()[0];
+    }
+
+    /**
+     * Übergibt ob der Nutzer ein Moderator ist
+     * 
+     * @return boolean ist Moderator
+     */
+    public function isModerator(){
+        return $this->usertype === User::getSupervisedUsertypes()[1];
     }
 }

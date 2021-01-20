@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
 }
 
 /**
- * Datebbank Klasse
+ * Datenbank Klasse
  * 
  * Diese Klasse ist die Schnittstelle für sämtliche Datenbank-Aufrufe.
  * Sie automatisiert den Prozess und enthält Konfigurationen.
@@ -31,9 +31,9 @@ class DB
     {
         if (DB::$_conn === null) {
             try {
-                $configFile = "./config.json";
+                $configFile = __DIR__."/../config.json";
                 if (file_exists($configFile)) {
-                    $config = file_get_contents("./config.json");
+                    $config = file_get_contents(__DIR__."/../config.json");
                     $json = json_decode($config, true);
                     $db = $json['database'];
                     DB::$_servername = $db['host'];
@@ -48,9 +48,9 @@ class DB
                 $_conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                 
                 DB::$_conn = $_conn;
-                if (!file_exists("./migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
+                if (!file_exists($_SERVER['DOCUMENT_ROOT']."/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
                     DB::$_migrated = DB::migrate();
-                    fclose(fopen("./migration.lock", "a+"));
+                    fclose(fopen($_SERVER['DOCUMENT_ROOT']."/migration.lock", "a+"));
                     session_destroy();
                 }
             } catch (PDOException $e) {
@@ -71,7 +71,7 @@ class DB
         DB::$_migrating = true;
         $sqls = array();
 
-        foreach (new DirectoryIterator('./sql/creates/') as $file) {
+        foreach (new DirectoryIterator(__DIR__.'/../sql/creates/') as $file) {
             if ($file->isDot()) {
                 continue;
             }
@@ -83,7 +83,7 @@ class DB
             $sqls[] = file_get_contents($file->getPath() . "/" . $file->getFilename());
         }
 
-        foreach (new DirectoryIterator('./sql/bundle/') as $file) {
+        foreach (new DirectoryIterator(__DIR__.'/../sql/bundle/') as $file) {
             if ($file->isDot()) {
                 continue;
             }
@@ -120,7 +120,6 @@ class DB
      * @param array $array
      */
     protected static function run(string $sql, array $values = null, string $fetchmode = null, $finalExecution = ""){
-        
         $conn = DB::connection();
         $result = null;
         try {

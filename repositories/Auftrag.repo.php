@@ -1,7 +1,4 @@
 <?php
-require_once "./classes/Auftrag.class.php";
-require_once "./classes/Modus.class.php";
-require_once "./repositories/Base.repo.php";
 
 /**
  * Auftrag Repository
@@ -19,7 +16,7 @@ class AuftragRepository extends BaseRepository
     {
         $result = BaseRepository::run(
             "UPDATE kxi_auftraege SET $col = :value WHERE id = :id;", 
-            array("id" => $id, "value" => $value),
+            array(":id" => $id, ":value" => $value),
             str_replace("Repository", "", get_called_class()),
             "fetch"
         );

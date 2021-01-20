@@ -1,8 +1,8 @@
 <?php
-require_once './classes/DB.class.php';
-require_once './repositories/Service.repo.php';
-require_once './repositories/User.repo.php';
-require_once './classes/User.class.php';
+// require_once './classes/DB.class.php';
+// require_once './repositories/Service.repo.php';
+// require_once './repositories/User.repo.php';
+// require_once './classes/User.class.php';
 
 /**
  * Erstellt die Logout(+Dashboard)/Login-Buttons
@@ -18,7 +18,7 @@ function printUserOptions(){
             $usertype = $user->getUsertype();
             $ml = "ml-auto";
             if (in_array($usertype, User::getSupervisedUsertypes())) {
-                echo "<a href=\"./dashboard.php\" class=\"fas fa-compass fa-2x align-self-end text-decoration-none\"></a>";
+                echo "<a href=\"./dashboard\" class=\"fas fa-compass fa-2x align-self-end text-decoration-none\"></a>";
                 $ml = "ml-3";
             }
             echo "<a href=\"./logout.php\" class=\"fas fa-sign-out-alt fa-2x $ml align-self-end text-decoration-none\"></a>";

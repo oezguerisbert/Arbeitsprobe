@@ -1,6 +1,4 @@
 <?php
-require_once "./classes/Modus.class.php";
-require_once "./repositories/Base.repo.php";
 
 
 class ModusRepository extends BaseRepository
