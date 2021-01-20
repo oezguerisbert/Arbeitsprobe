@@ -25,7 +25,7 @@ include '../incs/bootstrap.head.inc.php';
 
             if (sizeof($auftraege) < 1) {
                 echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
-                            <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Keine Aufträge, <a href='./alle-auftraege.php'>neu laden?</a></div>
+                            <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Keine Aufträge, <a href='./meine-auftraege.php'>neu laden?</a></div>
                         </div>";
             } else {
                 ?>

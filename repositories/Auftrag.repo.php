@@ -48,4 +48,40 @@ class AuftragRepository extends BaseRepository
         }
         return AuftragRepository::update($id, "modeid", $modus->getID());
     }
+
+    /**
+     * Findet Aufträge via User-ID
+     * 
+     * @param int $id id des Users
+     */
+    public static function findByUser(int $id)
+    {
+        $className = str_replace("Repository", "", get_called_class());
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
+            array(":userid" => $id),
+            $className,
+            "fetch"
+        );
+        return $result;
+    }
+
+    /**
+     * Findet Aufträge via Moderator(User)-ID
+     * 
+     * @param int $id id des Users
+     */
+    public static function findByModerator(int $id)
+    {
+        $className = str_replace("Repository", "", get_called_class());
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
+            array(":moderatorid" => $id),
+            $className,
+            "fetch"
+        );
+        return $result;
+    }
+
+
 }
