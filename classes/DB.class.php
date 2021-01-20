@@ -48,9 +48,9 @@ class DB
                 $_conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                 
                 DB::$_conn = $_conn;
-                if (!file_exists($_SERVER['DOCUMENT_ROOT']."/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
+                if (!file_exists($_SERVER['DOCUMENT_ROOT']."/Arbeitsprobe/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
                     DB::$_migrated = DB::migrate();
-                    fclose(fopen($_SERVER['DOCUMENT_ROOT']."/migration.lock", "a+"));
+                    fclose(fopen($_SERVER['DOCUMENT_ROOT']."/Arbeitsprobe/migration.lock", "a+"));
                     session_destroy();
                 }
             } catch (PDOException $e) {
