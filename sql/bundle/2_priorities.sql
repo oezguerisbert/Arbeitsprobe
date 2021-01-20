@@ -12,6 +12,6 @@ CREATE TABLE IF NOT EXISTS `kxi_priorities` (
 INSERT INTO
   `kxi_priorities`(`kuerzel`, `title`, `days`, `color`)
 VALUES
-  ("standart", "Standart", 7, "gray"),
-  ("tief", "Tief", 12, "blue"),
-  ("express", "Express", 5, "red");
+  ("standart", "Standart", 7, "#fff9e3"),
+  ("tief", "Tief", 12, "#eff8ff"),
+  ("express", "Express", 5, "#fdbdbe");
