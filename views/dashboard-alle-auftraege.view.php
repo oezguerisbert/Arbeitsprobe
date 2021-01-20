@@ -44,7 +44,7 @@ include '../incs/bootstrap.head.inc.php';
                         </tbody>
                     </table>
                 </div>
-            <?
+            <?php
             }
             
             ?>
