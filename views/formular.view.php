@@ -24,7 +24,6 @@ include './incs/bootstrap.head.inc.php';
                         Service-Formular
                         <br />
                         <?=ServiceRepository::findByKuerzel($service)?>
-                        <?=(isset($prio) ? PriorityRepository::findByKuerzel($prio) : "")?>
                     </h1>
                 <div id="infos">
                     <?php printResult();?>

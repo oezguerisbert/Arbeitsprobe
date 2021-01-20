@@ -70,7 +70,7 @@ class Kommentar
      */
     public function __toString()
     {
-        return "<div class='p-3 text-dark rounded mb-3' style='background-color:#ced5dc;'>
+        return "<div class='p-3 text-light rounded mb-3' style='background-color:rgba(0,0,0,0.2);'>
                     <span>{$this->getContent()}</span>
                     <br />
                     <br />

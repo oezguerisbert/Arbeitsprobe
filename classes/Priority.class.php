@@ -11,6 +11,7 @@ class Priority
     private $id;
     private $kuerzel;
     private $title;
+    private $color;
     private $days;
 
     /**
@@ -41,6 +42,15 @@ class Priority
         return $this->title;
     }
     /**
+     * Übergibt die Farbe der Priorität
+     * 
+     * @return string color
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+    /**
      * Übergibt die Tage der Priorität
      * 
      * @return int tage
@@ -48,13 +58,5 @@ class Priority
     public function getDays()
     {
         return $this->days;
-    }
-    /**
-     * Übergibt das HTML-Badge der Prorität
-     * 
-     * @return string HTML-Badge
-     */
-    public function __toString(){
-        return "<span class='badge badge-secondary ml-2'>{$this->getTitle()}</span>";
     }
 }

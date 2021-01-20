@@ -78,7 +78,7 @@ class AuftragRepository extends BaseRepository
             file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
             array(":moderatorid" => $id),
             $className,
-            "fetch"
+            "fetchAll"
         );
         return $result;
     }

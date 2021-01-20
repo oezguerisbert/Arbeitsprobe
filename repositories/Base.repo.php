@@ -75,8 +75,6 @@ class BaseRepository extends DB
     public static function create(array $options)
     {
         $className = str_replace("Repository", "", get_called_class());
-
-        $filename = str_replace("Repository", "", get_called_class()) . "." . __FUNCTION__ . ".sql";
         
         $result = BaseRepository::run(
             file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 

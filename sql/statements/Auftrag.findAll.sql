@@ -5,4 +5,4 @@ FROM
 WHERE
     visible = 1
 ORDER BY
-    prioid;
+    prioid DESC;

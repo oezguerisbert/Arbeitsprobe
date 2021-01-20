@@ -21,7 +21,7 @@ if (isset($_SESSION['userid'])) {
         $prio = $_POST['prio'];
         $errors = checkInput(array("priority" => $prio));
         if (sizeof($errors) === 0) {
-            $db_result = ServiceRepository::add(array("userid" => $_SESSION['userid'], "service" => strtolower($service), "priority" => $prio));
+            $db_result = AuftragRepository::create(array(":userid" => $_SESSION['userid'], ":serviceid" => ServiceRepository::findByKuerzel(strtolower($service))->getID(), ":prioid" => PriorityRepository::findByKuerzel($prio)->getID()));
             $db_query_result = $db_result ? "success" : "warning";
         }
     }
