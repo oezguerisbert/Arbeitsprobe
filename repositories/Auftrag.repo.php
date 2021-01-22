@@ -46,7 +46,7 @@ class AuftragRepository extends BaseRepository
         if (!$modus) {
             return false;
         }
-        return AuftragRepository::update($id, "modeid", $modus->getID());
+        return AuftragRepository::updateColumn($id, "modeid", $modus->getID());
     }
 
     /**

@@ -3,9 +3,6 @@
 $service = $_GET['service'];
 require_once __DIR__.'/../incs/checkInput.func.inc.php';
 require_once __DIR__.'/../incs/getPrioDays.func.inc.php';
-require_once __DIR__.'/../repositories/Service.repo.php';
-require_once __DIR__.'/../repositories/Priority.repo.php';
-require_once __DIR__.'/../classes/DB.class.php';
 
 
 /*

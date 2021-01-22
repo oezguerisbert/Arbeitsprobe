@@ -25,7 +25,7 @@ class BaseRepository extends DB
         $className = str_replace("Repository", "", get_called_class());
         $result = BaseRepository::run(
             file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
-            array(":limit" => "20", ":page" => $page),
+            array(":limit" => 20, ":page" => $page),
             $className,
             "fetchAll"
         );
