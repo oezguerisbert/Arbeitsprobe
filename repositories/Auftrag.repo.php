@@ -12,7 +12,7 @@ class AuftragRepository extends BaseRepository
      * @param string $col Spalte
      * @param mixed $value Wert
      */
-    public static function update(int $id, string $col, $value)
+    public static function updateColumn(int $id, string $col, $value)
     {
         $result = BaseRepository::run(
             "UPDATE kxi_auftraege SET $col = :value WHERE id = :id;", 

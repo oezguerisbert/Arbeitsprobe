@@ -15,7 +15,7 @@ include '../incs/bootstrap.head.inc.php';
                 <h1>KXI</h1>
                 <div class="ml-auto options d-flex pt-3 pb-3">
                     <a href="javascript:document.location.reload();" class="fas fa-sync-alt fa-2x align-self-end text-decoration-none"></a>
-                    <a href="./nutzer.php" class="fas fa-compass fa-2x align-self-end ml-3 text-decoration-none"></a>
+                    <a href="./" class="fas fa-compass fa-2x align-self-end ml-3 text-decoration-none"></a>
                     <a href="../logout.php" class="fas fa-sign-out-alt fa-2x ml-3 align-self-end text-decoration-none"></a>
                 </div>
             </div>
@@ -36,7 +36,7 @@ include '../incs/bootstrap.head.inc.php';
                     <div class="col p-0 mt-5">
                         <a href='./nutzer.php?add' class='btn btn-primary fa fa-plus' style='height:40px;width:45px !important; font-size:1.2rem;padding-top:9px;'></a>
                         <div class="row pl-3 pr-3 mt-2 ">
-                            <a class="btn btn-secondary col-1 mr-2" style="float:left;" href="./nutzer.php?p=<? print $previous_page ?>">Previous</a>
+                            <a class="btn btn-secondary col-1 mr-2 <?php echo $page == 1 ? "disabled" : "";?>" style="float:left;" href="./nutzer.php?p=<? print $previous_page ?>">Previous</a>
                             <a class="btn btn-secondary col-1" style="float:left;" href="./nutzer.php?p=<? print $next_page ?>">Next</a>
                         </div>
                     </div>

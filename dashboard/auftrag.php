@@ -12,10 +12,10 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
         AuftragRepository::updateModus($_GET['id'], $_GET['m']);
     }
     if(isset($_POST['servicetype'])){
-        AuftragRepository::update($_GET['id'], "serviceid", ServiceRepository::findByKuerzel($_POST['servicetype'])->getID());
+        AuftragRepository::updateColumn($_GET['id'], "serviceid", ServiceRepository::findByKuerzel($_POST['servicetype'])->getID());
     }
     if (isset($_GET['claim'])) {
-        AuftragRepository::update($_GET['id'], "moderatorid", intval($_SESSION['userid']));
+        AuftragRepository::updateColumn($_GET['id'], "moderatorid", intval($_SESSION['userid']));
     }
     if (isset($_GET['v'])) {
         $vMode = $_GET['v'] === "1" ? true : false;
