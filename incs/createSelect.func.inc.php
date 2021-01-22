@@ -13,7 +13,7 @@ function createSelect(string $name, string $value, array $values, $hint = "", bo
     return "<div class=\"form-group\">
     <label for=\"$name\">".ucfirst($name)."</label>
     <select class=\"form-control\" id=\"$name\" name=\"$name\" value=\"$value\" placeholder=\"".ucfirst($name)."\" ".($isRequired ? "required" : "").">
-    ".createOptions($values)."
+    ".createOptions($values, $value)."
     </select>
     ".(empty($hint) ? "" : "<small id=\"".$name."Help\" class=\"form-text text-muted\">$hint</small>")."
 </div>";
@@ -24,10 +24,10 @@ function createSelect(string $name, string $value, array $values, $hint = "", bo
  * 
  * @param array
  */
-function createOptions(array $values){
+function createOptions(array $values, $selection){
     $result = "";
     foreach($values as $key => $value) {
-        $result .= "<option value=\"$value\">$value</option>";
+        $result .= "<option value=\"$value\" ".($value === $selection ? "selected" : "").">$value</option>";
     }
     return $result;
 }

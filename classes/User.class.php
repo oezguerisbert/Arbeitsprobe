@@ -88,7 +88,7 @@ class User
      * Übergibt das Geburtsdatum des Nutzers
      * @return string gender
      */
-    public function getBirthday(){
+    public function getBirthdate(){
         return $this->birthdate;
     }
 

@@ -82,4 +82,19 @@ class BaseRepository extends DB
         );
         return $result;
     }
+
+    /**
+     * Updated ein Entity in der Datenbank
+     * @return array $options Optionen
+     */
+    public static function update(int $id, array $options)
+    {
+        $className = str_replace("Repository", "", get_called_class());
+        
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className. "." . __FUNCTION__ . ".sql")), 
+            array_merge(array(":id" => $id),$options)
+        );
+        return $result;
+    }
 }
