@@ -4,5 +4,7 @@ FROM
     kxi_auftraege
 WHERE
     visible = 1
+AND id >= :page
 ORDER BY
-    prioid DESC;
+    prioid DESC
+LIMIT :limit;

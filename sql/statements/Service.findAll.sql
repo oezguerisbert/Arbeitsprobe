@@ -1,4 +1,6 @@
 SELECT
     *
 FROM
-    kxi_services;
+    kxi_services
+WHERE id >= :page
+LIMIT :limit;

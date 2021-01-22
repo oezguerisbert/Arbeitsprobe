@@ -20,7 +20,7 @@ include '../incs/bootstrap.head.inc.php';
                     <a href="../logout.php" class="fas fa-sign-out-alt fa-2x ml-3 align-self-end text-decoration-none"></a>
                 </div>
             </div>
-            <h2>Dashboard</h2>
+            <h2>Dashboard </h2>
             <?php
 
             if (sizeof($auftraege) < 1) {
@@ -37,6 +37,7 @@ include '../incs/bootstrap.head.inc.php';
                             <th scope="col">Benutzername</th>
                             <th scope="col">Service</th>
                             <th scope="col">Priorität</th>
+                            <th scope="col">Admin / Moderator</th>
                         </tr>
                         </thead>
                         <tbody>

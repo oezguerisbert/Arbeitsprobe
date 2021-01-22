@@ -33,7 +33,7 @@ function printAuftraege()
     global $auftraege;
     foreach ($auftraege as $key => $auftrag) {
 
-        echo $auftrag->toRow();
+        echo $auftrag->toRow(false);
     }
 
 }

@@ -1,4 +1,6 @@
 SELECT
     *
 FROM
-    users;
+    users
+WHERE id >= :page
+LIMIT :limit;

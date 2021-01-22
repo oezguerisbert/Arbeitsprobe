@@ -20,7 +20,7 @@ include '../incs/bootstrap.head.inc.php';
                     <a href="../logout.php" class="fas fa-sign-out-alt fa-2x ml-3 align-self-end text-decoration-none"></a>
                 </div>
             </div>
-            <h2>Dashboard</h2>
+            <h2>Dashboard </h2>
             <?php
 
             if (sizeof($auftraege) < 1) {

@@ -188,9 +188,9 @@ class Auftrag
         $replyButton = "<a href='#' data-target='#commentModal' data-toggle='modal' class='btn btn-secondary mr-2'>Kommentieren</a>";
         $denyButton = "<a href='auftrag.php?id={$this->getID()}&m=c' class='btn btn-danger mr-2'>Ablehnen</a>";
         $editButton = "<a href='#' data-target='#editModal' data-toggle='modal' class='btn btn-secondary mr-2'>Editieren</a>";
-        $claimButton = $this->getModerator() === null ? "<a href='auftrag.php?id={$this->getID()}&claim' class='btn btn-secondary mr-2'>Claim</a>" : "<a href='' class='btn btn-secondary mr-2 disabled'>Claim</a>";
+        $claimButton = $this->getModerator() === null ? "<a href='auftrag.php?id={$this->getID()}&claim' class='btn btn-secondary mr-2'>Claim</a>" : ($this->getModerator()->getID() !== $_SESSION['userid'] ? "<a href='' class='btn btn-secondary mr-2 disabled'>Claim</a>" : "");
         $showOptional = !$this->isFinished() && !$this->isDeclined() ? $editButton.$replyButton : "";
-        $finishButton = $this->isFinished() || $this->isDeclined() ? "<button href='./' class='btn btn-primary' disabled>Erledigt</button>" : "<button onclick=\"location.href='./auftrag.php?id={$this->getID()}&m=f'\" class='btn btn-primary'>Erledigt</button>";
+        $finishButton = $this->isFinished() || $this->isDeclined() ? "<button href='./' class='btn btn-primary' disabled>Erledigt</button>" : "<a href=\"./auftrag.php?id={$this->getID()}&m=f\" class='btn btn-primary'>Erledigt</a>";
         $allowCommentHref = (!$this->isFinished() && !$this->isDeclined()) ? "<a href='#' data-target='#commentModal' data-toggle='modal'>Hinzufügen?</a>" : "";
         $comments = $this->getComments();
         $kommentare = "";
@@ -227,14 +227,15 @@ class Auftrag
      * 
      * @return string HTML-TableRow
      */
-    public function toRow()
+    public function toRow(bool $withModerator = true)
     {
         return "
-            <tr style=\"cursor: pointer;\" onclick=\"location.href= './auftrag.php?id={$this->getID()}'\";>
+            <tr style=\"cursor: pointer;background:{$this->getPriority()->getColor()}\" onclick=\"location.href= './auftrag.php?id={$this->getID()}'\";>
                 <th scope=\"row\">" . $this->getID() . "</th>
                 <td>{$this->getUser()->getUsername()}</td>
                 <td>{$this->getService()->getTitle()}</td>
-                <td>{$this->getPriority()->getKuerzel()}</td>
+                <td>{$this->getPriority()->getKuerzel()} - {$this->getPriority()->getDays()} Tage</td>
+                ".($withModerator ? "<td>".($this->getModerator() != null ? "@".$this->getModerator()->getUsername(): "<span style='color:gray;font-style:italic;'>not claimed</span>")."</td>" : "")."
             </tr>";
     }
 }
