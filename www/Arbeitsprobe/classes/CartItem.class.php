@@ -8,11 +8,10 @@
 class CartItem
 {
     private $id;
-    private $userid;
     private $name;
     private $birthdate;
     private $height;
-    private $auftragid;
+    private $serviceid;
 
     /**
      * Übergibt die ID des Auftrags
