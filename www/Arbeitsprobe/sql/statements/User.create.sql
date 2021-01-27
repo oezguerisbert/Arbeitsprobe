@@ -3,9 +3,6 @@ INSERT INTO
         username,
         vorname,
         nachname,
-        gender,
-        height,
-        birthdate,
         phone,
         email,
         password
@@ -13,9 +10,6 @@ INSERT INTO
         :username,
         :vorname,
         :nachname,
-        :gender,
-        :height,
-        :birthdate,
         :phone,
         :email,
         :password

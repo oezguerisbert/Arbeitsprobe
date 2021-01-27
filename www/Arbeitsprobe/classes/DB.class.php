@@ -5,12 +5,12 @@ if (!isset($_SESSION)) {
 
 /**
  * Datenbank Klasse
- * 
+ *
  * Diese Klasse ist die Schnittstelle für sämtliche Datenbank-Aufrufe.
  * Sie automatisiert den Prozess und enthält Konfigurationen.
- * 
+ *
  * Falls keine Konfiguration vorhanden ist wird diese getriggert und muss eingereicht werden.
- * 
+ *
  * Beim entfernen der Datei `migration.lock` wird die Datenbank erneust befüllt, bzw resetted.
  */
 class DB
@@ -31,9 +31,9 @@ class DB
     {
         if (DB::$_conn === null) {
             try {
-                $configFile = __DIR__."/../config.json";
+                $configFile = __DIR__ . "/../config.json";
                 if (file_exists($configFile)) {
-                    $config = file_get_contents(__DIR__."/../config.json");
+                    $config = file_get_contents(__DIR__ . "/../config.json");
                     $json = json_decode($config, true);
                     $db = $json['database'];
                     DB::$_servername = $db['host'];
@@ -46,11 +46,17 @@ class DB
                 // set the PDO error mode to exception
                 $_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $_conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-                
+
                 DB::$_conn = $_conn;
-                if (!file_exists($_SERVER['DOCUMENT_ROOT']."/Arbeitsprobe/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
-                    DB::$_migrated = DB::migrate();
-                    fclose(fopen($_SERVER['DOCUMENT_ROOT']."/Arbeitsprobe/migration.lock", "a+"));
+                if (!file_exists($_SERVER['DOCUMENT_ROOT'] . "/Arbeitsprobe/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
+                    $res = DB::migrate();
+                    DB::$_migrated = $res["result"];
+                    if (count($res["errors"]) > 0) {
+                        foreach ($res["errors"] as $err) {
+                            print_r(array($err[0]), $err[1]);
+                        }
+                    }
+                    fclose(fopen($_SERVER['DOCUMENT_ROOT'] . "/Arbeitsprobe/migration.lock", "a+"));
                     session_destroy();
                 }
             } catch (PDOException $e) {
@@ -61,29 +67,17 @@ class DB
     }
     /**
      * Migration
-     * 
+     *
      * Migriert alle SQL-Dateien vom `sql/creates` & `sql/bundle` Ordner auf die Datenbank.
-     * 
-     * @return boolean resultat der Migration 
+     *
+     * @return boolean resultat der Migration
      */
     private static function migrate()
     {
         DB::$_migrating = true;
         $sqls = array();
 
-        foreach (new DirectoryIterator(__DIR__.'/../sql/creates/') as $file) {
-            if ($file->isDot()) {
-                continue;
-            }
-
-            if ($file->isDir()) {
-                continue;
-            }
-
-            $sqls[] = file_get_contents($file->getPath() . "/" . $file->getFilename());
-        }
-
-        foreach (new DirectoryIterator(__DIR__.'/../sql/bundle/') as $file) {
+        foreach (new DirectoryIterator(__DIR__ . '/../sql/bundle/') as $file) {
             if ($file->isDot()) {
                 continue;
             }
@@ -92,20 +86,28 @@ class DB
                 continue;
             }
             $sqls[] = file_get_contents($file->getPath() . "/" . $file->getFilename());
+            print $file->getFilename();
         }
         $result = true;
+        $errors = array();
         foreach ($sqls as $key => $sql) {
             $c = DB::connection();
-            $sqlResult = $c->exec($sql);
-            $result &= $sqlResult;
+            try {
+                $sqlResult = $c->exec($sql);
+
+                $result &= $sqlResult;
+            } catch (\Exception $e) {
+                $errors[] = array($sql, $e->getMessage());
+            }
+
         }
-        return $result;
+        return array("result" => $result, "errors" => $errors);
     }
     /**
      * Migrations-Check
-     * 
+     *
      * Checkt ob die Migration durch ist.
-     * 
+     *
      * @return boolean migration
      */
     public static function checkMigration()
@@ -115,11 +117,12 @@ class DB
 
     /**
      * Runs the Query in a transaction
-     * 
+     *
      * @param string $sql
      * @param array $array
      */
-    protected static function run(string $sql, array $values = null, string $fetchmode = null, $finalExecution = ""){
+    protected static function run(string $sql, array $values = null, string $fetchmode = null, $finalExecution = "")
+    {
         $conn = DB::connection();
         $result = null;
         try {
@@ -127,21 +130,21 @@ class DB
             $conn->beginTransaction();
             $stmt = $conn->prepare($sql);
             $result2 = null;
-            if($values !== null){
+            if ($values !== null) {
                 $result2 = $stmt->execute($values);
-            }else {
+            } else {
                 $result2 = $stmt->execute();
             }
-            if($fetchmode !== null){
+            if ($fetchmode !== null) {
                 $stmt->setFetchMode(PDO::FETCH_CLASS, $fetchmode);
             }
-            
-            if($finalExecution != ""){
+
+            if ($finalExecution != "") {
                 $result = $stmt->$finalExecution();
-            }else {
+            } else {
                 $result = $result2;
             }
-            
+
             $conn->commit();
         } catch (Excepion $e) {
             $conn->rollBack();
