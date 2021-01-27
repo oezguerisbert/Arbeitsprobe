@@ -11,8 +11,8 @@ require_once './incs/createAlert.func.inc.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kxi-Service</title>
     <?php
-include './incs/bootstrap.head.inc.php';
-?>
+    include './incs/bootstrap.head.inc.php';
+    ?>
 </head>
 <body>
     <div class="container">
