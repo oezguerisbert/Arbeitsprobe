@@ -3,7 +3,7 @@ session_start();
 session_destroy();
 require_once __DIR__ . '/incs/requirements.func.inc.php';
 
-DB::reset();
+$resetResult = DB::reset();
 $migrationLockFile = __DIR__ . "/./migration.lock";
 if (file_exists($migrationLockFile)) {
     unlink($migrationLockFile);

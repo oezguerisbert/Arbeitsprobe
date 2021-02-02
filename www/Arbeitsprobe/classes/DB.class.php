@@ -107,19 +107,22 @@ class DB
     public static function reset()
     {
         $configFile = __DIR__ . "/../config.json";
+        $result = null;
         if (file_exists($configFile)) {
             $config = json_decode(file_get_contents($configFile), true)['database'];
             $conn = new PDO("mysql:host=" . $config['host'] . ";port=" . $config['port'] . ";dbname=sys", $config['user'], $config['password']);
-            $resetSQL = "DROP DATABASE :dbname; CREATE DATABASE :dbname;";
+            $resetSQL = "DROP DATABASE IF EXISTS :dbname; CREATE DATABASE IF NOT EXISTS :dbname;";
             $prepareValues = array(":dbname" => $config['dbname']);
-            $stmt = $conn->prepare($resetSQL);
-            try {
-                $stmt->execute($prepareValues);
-            } catch (Exception $ex) {
-                die($ex->getMessage());
+            foreach ($prepareValues as $pK => $pV) {
+                $resetSQL = str_replace($pK, $pV, $resetSQL);
             }
-
+            try {
+                $result = $conn->exec($resetSQL);
+            } catch (Exception $ex) {
+                $result = $ex->getMessage();
+            }
         }
+        return $result;
 
     }
 

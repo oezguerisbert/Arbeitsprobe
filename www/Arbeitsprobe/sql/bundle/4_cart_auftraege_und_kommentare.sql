@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `kxi_cart` (
     `id` INT NOT NULL AUTO_INCREMENT,
+    `userid` INT NOT NULL,
     `serviceid` INT NULL,
     `prioid` INT NULL,
     `gender` ENUM('male', 'female', 'other') NOT NULL,
