@@ -86,7 +86,7 @@ class DB
                 continue;
             }
             $sqls[] = file_get_contents($file->getPath() . "/" . $file->getFilename());
-            print $file->getFilename();
+
         }
         $result = true;
         $errors = array();
@@ -103,6 +103,26 @@ class DB
         }
         return array("result" => $result, "errors" => $errors);
     }
+
+    public static function reset()
+    {
+        $configFile = __DIR__ . "/../config.json";
+        if (file_exists($configFile)) {
+            $config = json_decode(file_get_contents($configFile), true)['database'];
+            $conn = new PDO("mysql:host=" . $config['host'] . ";port=" . $config['port'] . ";dbname=sys", $config['user'], $config['password']);
+            $resetSQL = "DROP DATABASE :dbname; CREATE DATABASE :dbname;";
+            $prepareValues = array(":dbname" => $config['dbname']);
+            $stmt = $conn->prepare($resetSQL);
+            try {
+                $stmt->execute($prepareValues);
+            } catch (Exception $ex) {
+                die($ex->getMessage());
+            }
+
+        }
+
+    }
+
     /**
      * Migrations-Check
      *

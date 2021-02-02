@@ -21,7 +21,7 @@ if (!file_exists("./config.json")) {
         $configHandle = fopen("./config.json", "w+");
         fwrite($configHandle, json_encode($conf));
         fclose($configHandle);
-        sleep(2);
+        sleep(1);
         header("Location: ./");
     }
 
