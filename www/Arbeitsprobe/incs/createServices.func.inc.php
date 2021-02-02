@@ -13,8 +13,8 @@ function createCard(string $imageLink, string $title, string $description = "", 
     return "
         <div class='col p-2'>
             <div class='card shadow-md'>
-                <img src='$imageLink' class='card-img-top'>
-                <div class='card-body' style='min-height:180px;height:auto;'>
+                <div class='card-img-top' style='height:150px;background-image:url(\"$imageLink\");background-size:cover;background-position:center;'></div>
+                <div class='card-body' style='height:auto;'>
                     <h5 class='card-title'>$title</h5>
                     <p class='card-text' style='height:auto;min-height:50px;'>$description</p>
                     <div class='d-flex'>

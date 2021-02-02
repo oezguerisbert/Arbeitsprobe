@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../incs/createServices.func.inc.php';
+require_once __DIR__ . '/../incs/createServices.func.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -25,17 +25,19 @@ include './incs/bootstrap.head.inc.php';
                 Dein Ski-Service in den Alpen 😊⛷
             </h2>
             <br />
-            <img src="https://images.unsplash.com/photo-1486072889922-9aea1fc0a34d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" class="col p-0 br-2 rounded h-50" />
+            <div class="col p-0 br-2 rounded" style="height:200px;background-image:url('https://bit.ly/3pGh7HS'); background-repeat: no-repeat;background-size:cover;background-position:bottom;"></div>
             <h3 class="pt-4">
                 Über uns
             </h3>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut asperiores tempora maxime obcaecati iste voluptatem, provident sapiente nam eius perferendis a deserunt eveniet! Inventore, quod et eveniet doloremque illum incidunt.</p>
+            <p class="text-justify">
+                Wir sind ein Ski-Unternehmen und bieten verschiedene Projekte an. Wir sind darauf spezialisiert Aufträge hoch professionell auszuführen und bieten die beste Qualität an.
+            </p>
             <div class="row row-cols-3 justify-content-around">
                 <?=createServices(ServiceRepository::findAll());?>
             </div>
             <div class="row p-5"></div>
         </div>
-        <?php include __DIR__.'/../incs/footer.inc.php';?>
+        <?php include __DIR__ . '/../incs/footer.inc.php';?>
     </div>
 </body>
 </html>
