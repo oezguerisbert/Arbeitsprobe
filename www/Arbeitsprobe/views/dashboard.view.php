@@ -21,11 +21,11 @@ include '../incs/bootstrap.head.inc.php';
             </div>
             <h2>Dashboard</h2>
             <div class="row row-cols-3 pl-3 pr-3 justify-content-start">
-                <a href="./meine-auftraege.php" class="col-2 card p-2 mr-2"><div class="">Meine Aufträge</div></a>
-                <a href="./alle-auftraege.php" class="col-2 card p-2 mr-2"><div class="">Alle Aufträge</div></a>
-                <a href="./nutzer.php" class="col-2 card p-2 mr-2"><div class="">Nutzer</div></a>
+                <a href="./meine-auftraege.php" class="col-2 card p-2 mr-2"><div class="">My Tasks</div></a>
+                <a href="./alle-auftraege.php" class="col-2 card p-2 mr-2"><div class="">All Tasks</div></a>
+                <a href="./nutzer.php" class="col-2 card p-2 mr-2"><div class="">Users</div></a>
             </div>
-            
+
             <div class="row p-5"></div>
         </div>
     </div>

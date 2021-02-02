@@ -20,7 +20,7 @@ include '../incs/bootstrap.head.inc.php';
                 </div>
             </div>
             <h2>Dashboard</h2>
-            <h3>Nutzer</h3>
+            <h3>User</h3>
             <?php
 if ($mode === "list") {
     ?>

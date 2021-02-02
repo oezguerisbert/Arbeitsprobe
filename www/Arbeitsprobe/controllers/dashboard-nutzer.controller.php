@@ -3,9 +3,11 @@ require_once __DIR__ . '/../incs/createInput.func.inc.php';
 require_once __DIR__ . '/../incs/createSelect.func.inc.php';
 require_once __DIR__ . '/../incs/createAlert.func.inc.php';
 require_once __DIR__ . '/../incs/checkInput.func.inc.php';
-$page = $_GET['p'] ?? 1;
+$howmanyusers = UserRepository::getAmount();
+$page = min($howmanyusers, $_GET['p'] ?? 1);
 $limit = 20;
 $users = UserRepository::findAll($page);
+
 $next_page = $page + min(count($users) - 1, $limit);
 $previous_page = max(1, $page - max(count($users) - 1, $limit));
 $mode = "list";
@@ -51,18 +53,15 @@ if ($mode === "formular") {
             if (isset($db_query_result['error'])) {
                 switch ($db_query_result['error']) {
                     case 'DUPLICATE ENTRY':
-                        $data_errors = array("Bitte wählen sie einen anderen Nutzernamen oder eine andere E-Mail.");
+                        $data_errors = array(Errors::EMAIL_OR_USER_EXISTS);
                         break;
-
                     default:
-
-                        $data_errors = array("Ein unerwarteter Fehler ist aufgetreten.<br />" . $db_query_result['error']);
+                        $data_errors = array(Errors::unknown($db_query_result['error']));
                         break;
                 }
-
             }
             if ($db_query_result && !isset($db_query_result['error'])) {
-                echo createAlert("success", "Created!", array("Der Nutzer '" . $data["username"] . "' wurde erfolgreich erstellt!"), false);
+                echo createAlert("success", "Created!", array("The User '" . $data["username"] . "' was created successfully!"), false);
             } else if (isset($data_errors) && sizeof($data_errors) > 0) {
                 echo createAlert("danger", "Opps!", $data_errors, false);
             }
@@ -94,14 +93,12 @@ if ($mode === "edit") {
                 if (isset($db_query_result['error'])) {
                     switch ($db_query_result['error']) {
                         case 'DUPLICATE ENTRY':
-                            $data_errors[] = "Bitte wählen sie einen anderen Nutzernamen oder eine andere E-Mail.";
+                            $data_errors[] = Errors::cantUpdate($dk, $dv, "already exists");
                             break;
-
                         default:
-                            $data_errors[] = "Ein unerwarteter Fehler ist aufgetreten.<br />" . $db_query_result['error'];
+                            $data_errors[] = Errors::unknown($db_query_result['error']);
                             break;
                     }
-
                 } else {
                     $db_query_result2 = $db_query_result2 && $db_query_result;
                 }
@@ -110,8 +107,8 @@ if ($mode === "edit") {
                 }
             }
 
-            if ($db_query_result2 && !isset($db_query_result['error'])) {
-                echo createAlert("success", "Updated!", array("Der Nutzer '" . $data["username"] . "' wurde erfolgreich aktualisiert!"), false);
+            if ($db_query_result && !isset($db_query_result['error'])) {
+                echo createAlert("success", "Updated!", array("The User '" . $data["username"] . "' was updated successfully!"), false);
             } else if (isset($data_errors) && sizeof($data_errors) > 0) {
                 echo createAlert("danger", "Opps!", $data_errors, false);
             }
