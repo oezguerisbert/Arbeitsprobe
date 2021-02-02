@@ -1,9 +1,8 @@
 <?php
 
-
 /**
  * Auftrag Klasse
- * 
+ *
  * Diese Klasse representiert das Model von der Datenbanktabelle `kxi_auftraege`.
  */
 class Auftrag
@@ -12,6 +11,7 @@ class Auftrag
     private $userid;
     private $prioid;
     private $serviceid;
+    private $amount;
     private $request_date;
     private $moderatorid;
     private $visible;
@@ -19,7 +19,7 @@ class Auftrag
 
     /**
      * Übergibt die ID des Auftrags
-     * 
+     *
      * @return mixed id
      */
     public function getID()
@@ -29,7 +29,7 @@ class Auftrag
 
     /**
      * Übergibt den User des Auftrags
-     * 
+     *
      * @return User user
      */
     public function getUser(): User
@@ -39,7 +39,7 @@ class Auftrag
 
     /**
      * Übergibt den Moderator des Auftrags
-     * 
+     *
      * @return User user
      */
     public function getModerator()
@@ -49,7 +49,7 @@ class Auftrag
 
     /**
      * Übergibt die Priorität des Auftrags
-     * 
+     *
      * @return Priority prioriät
      */
     public function getPriority(): Priority
@@ -59,7 +59,7 @@ class Auftrag
 
     /**
      * Übergibt den Service des Auftrags
-     * 
+     *
      * @return Service service
      */
     public function getService(): Service
@@ -69,7 +69,7 @@ class Auftrag
 
     /**
      * Übergibt das Datum des Auftrags
-     * 
+     *
      * @return string datum
      */
     public function getRequestedDate(): string
@@ -79,7 +79,7 @@ class Auftrag
 
     /**
      * Übergibt den Modus des Auftrags
-     * 
+     *
      * @return Modus modus
      */
     public function getMode()
@@ -88,7 +88,7 @@ class Auftrag
     }
     /**
      * Übergibt den Modues des Auftrags via Kürzel
-     * 
+     *
      * @return Modus modus
      */
     public function getModeAsKuerzel()
@@ -98,7 +98,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag neu erstellt wurde
-     * 
+     *
      * @return boolean ist neu
      */
     public function isNew()
@@ -108,7 +108,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag abgelehnt wurde
-     * 
+     *
      * @return boolean ist abgelehnt
      */
     public function isDeclined()
@@ -118,7 +118,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag verstellt ist
-     * 
+     *
      * @return boolean ist versteckt
      */
     public function isHidden()
@@ -128,7 +128,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag akzeptiert wurde
-     * 
+     *
      * @return boolean ist akzeptiert
      */
     public function isAccepted()
@@ -138,7 +138,7 @@ class Auftrag
 
     /**
      * Übergibt die Kommentare des Auftrags
-     * 
+     *
      * @return Kommentar[] kommentare-array
      */
     public function getComments()
@@ -150,7 +150,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag erledigt ist
-     * 
+     *
      * @return boolean ist erledigt
      */
     public function isFinished()
@@ -160,7 +160,7 @@ class Auftrag
 
     /**
      * Übergibt den Sichbarkeits-Icon für Font Awesome
-     * 
+     *
      * @return string icon-class
      */
     public function getVisibleIcon()
@@ -170,7 +170,7 @@ class Auftrag
 
     /**
      * Übergibt ob der Auftrag sichtbar ist
-     * 
+     *
      * @return boolean ist sichtbar
      */
     public function isVisible()
@@ -179,7 +179,7 @@ class Auftrag
     }
     /**
      * Übergibt den Auftrrag als fertiges HTML Konstrukt
-     * 
+     *
      * @return string HTML-Konstrukt
      */
     public function __toString()
@@ -189,7 +189,7 @@ class Auftrag
         $denyButton = "<a href='auftrag.php?id={$this->getID()}&m=c' class='btn btn-danger mr-2'>Ablehnen</a>";
         $editButton = "<a href='#' data-target='#editModal' data-toggle='modal' class='btn btn-secondary mr-2'>Editieren</a>";
         $claimButton = $this->getModerator() === null ? "<a href='auftrag.php?id={$this->getID()}&claim' class='btn btn-secondary mr-2'>Claim</a>" : ($this->getModerator()->getID() !== $_SESSION['userid'] ? "<a href='' class='btn btn-secondary mr-2 disabled'>Claim</a>" : "");
-        $showOptional = !$this->isFinished() && !$this->isDeclined() ? $editButton.$replyButton : "";
+        $showOptional = !$this->isFinished() && !$this->isDeclined() ? $editButton . $replyButton : "";
         $finishButton = $this->isFinished() || $this->isDeclined() ? "<button href='./' class='btn btn-primary' disabled>Erledigt</button>" : "<a href=\"./auftrag.php?id={$this->getID()}&m=f\" class='btn btn-primary'>Erledigt</a>";
         $allowCommentHref = (!$this->isFinished() && !$this->isDeclined()) ? "<a href='#' data-target='#commentModal' data-toggle='modal'>Hinzufügen?</a>" : "";
         $comments = $this->getComments();
@@ -224,7 +224,7 @@ class Auftrag
     }
     /**
      * Übergibt ob den Auftrag als Reihe für die Auflistung der Aufträge
-     * 
+     *
      * @return string HTML-TableRow
      */
     public function toRow(bool $withModerator = true)
@@ -235,7 +235,7 @@ class Auftrag
                 <td>{$this->getUser()->getUsername()}</td>
                 <td>{$this->getService()->getTitle()}</td>
                 <td>{$this->getPriority()->getKuerzel()} - {$this->getPriority()->getDays()} Tage</td>
-                ".($withModerator ? "<td>".($this->getModerator() != null ? "@".$this->getModerator()->getUsername(): "<span style='color:gray;font-style:italic;'>not claimed</span>")."</td>" : "")."
+                " . ($withModerator ? "<td>" . ($this->getModerator() != null ? "@" . $this->getModerator()->getUsername() : "<span style='color:gray;font-style:italic;'>not claimed</span>") . "</td>" : "") . "
             </tr>";
     }
 }

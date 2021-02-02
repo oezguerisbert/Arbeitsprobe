@@ -169,7 +169,8 @@ class DB
             }
 
             $conn->commit();
-        } catch (Excepion $e) {
+        } catch (PDOException $e) {
+            $result = array("error" => Errors::get($e->getCode()));
             $conn->rollBack();
         }
 

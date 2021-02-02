@@ -28,18 +28,15 @@ class CartItemRepository extends BaseRepository
      *
      * @param int $id id des Users
      */
-    public static function findByUser(int $id)
+    public static function findByCart(int $id)
     {
         $className = str_replace("Repository", "", get_called_class());
-        $result = array();
-        if (isset($_SESSION['cartid'])) {
-            $result = BaseRepository::run(
-                file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")),
-                array(":userid" => $id, ":cartid" => $_SESSION['cartid']),
-                $className,
-                "fetchAll"
-            );
-        }
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")),
+            array(":cartid" => $id),
+            $className,
+            "fetchAll"
+        );
         return $result;
     }
 

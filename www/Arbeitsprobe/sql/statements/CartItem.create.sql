@@ -1,4 +1,4 @@
 INSERT INTO
-    kxi_cart ()
+    kxi_cart (userid)
 VALUES
-();
+    (:userid);

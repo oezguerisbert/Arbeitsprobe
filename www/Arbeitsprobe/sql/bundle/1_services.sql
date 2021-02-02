@@ -16,7 +16,7 @@ VALUES
   (
     "allround",
     "Allround-Skis",
-    70.00,
+    50.00,
     "Unsere Allround-Skis für jeden."
   ),
   (
@@ -34,18 +34,18 @@ VALUES
   (
     "freeride",
     "Freeride-Skis",
-    20.00,
+    35.00,
     "Free Ride Skis sind für Profi-Ski fahrer ☺"
   ),
   (
     "goofy",
     "Goofy-Snowboard",
-    15.00,
+    90.00,
     "Ein Goofy Snowboard für chillige snowboard Aktivitäten!"
   ),
   (
     "regular",
     "Regular-Snowboard",
-    15.00,
+    50.00,
     "Reguläre Snowboards für jederman/-frau 🤩"
   );

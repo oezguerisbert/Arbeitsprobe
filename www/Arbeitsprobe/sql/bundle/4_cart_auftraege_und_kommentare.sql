@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `kxi_auftraege` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `prioid` INT,
     `serviceid` INT,
+    `amount` INT NOT NULL,
     `request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `userid` INT NOT NULL,
     `moderatorid` INT,

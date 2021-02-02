@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Warenkorb Klasse
+ * WarenkorbItem Klasse
  *
- * Diese Klasse representiert das Model von der Datenbanktabelle `kxi_auftraege`.
+ * Diese Klasse representiert das Model von der Datenbanktabelle `kxi_cart_items`.
  */
 class CartItem
 {
@@ -11,6 +11,7 @@ class CartItem
     private $name;
     private $birthdate;
     private $height;
+    private $cartid;
     private $serviceid;
 
     /**
@@ -24,13 +25,13 @@ class CartItem
     }
 
     /**
-     * Übergibt den User des Auftrags
+     * Übergibt den Warenkorb des Auftrags
      *
-     * @return User user
+     * @return Cart cart
      */
-    public function getUser(): User
+    public function getCart(): Cart
     {
-        return UserRepository::find($this->userid);
+        return CartRepository::find($this->cartid);
     }
 
     /**

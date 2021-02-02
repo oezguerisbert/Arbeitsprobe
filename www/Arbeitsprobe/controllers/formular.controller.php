@@ -1,24 +1,31 @@
 <?php
 
 $service = $_GET['service'];
-require_once __DIR__.'/../incs/checkInput.func.inc.php';
-require_once __DIR__.'/../incs/getPrioDays.func.inc.php';
-
+require_once __DIR__ . '/../incs/checkInput.func.inc.php';
+require_once __DIR__ . '/../incs/getPrioDays.func.inc.php';
 
 /*
 In diesem Controller wird die Logik für das Ski-Serviceformular übernommen.
 
- - LoginCheck
- - Datenbank Resultat nach der Anfrage
+- LoginCheck
+- Datenbank Resultat nach der Anfrage
 
-*/
+ */
 
 if (isset($_SESSION['userid'])) {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prio = $_POST['prio'];
-        $errors = checkInput(array("priority" => $prio));
+        $amount = $_POST['amount'];
+        $errors = checkInput(array("priority" => $prio, "amount" => $amount));
         if (sizeof($errors) === 0) {
-            $db_result = AuftragRepository::create(array(":userid" => $_SESSION['userid'], ":serviceid" => ServiceRepository::findByKuerzel(strtolower($service))->getID(), ":prioid" => PriorityRepository::findByKuerzel($prio)->getID()));
+            $db_result = AuftragRepository::create(
+                array(
+                    ":userid" => $_SESSION['userid'],
+                    ":serviceid" => ServiceRepository::findByKuerzel(strtolower($service))->getID(),
+                    ":prioid" => PriorityRepository::findByKuerzel($prio)->getID(),
+                    ":amount" => intval($amount),
+                )
+            );
             $db_query_result = $db_result ? "success" : "warning";
         }
     }
