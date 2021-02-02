@@ -143,7 +143,7 @@ class User
     {
         return array("admin", "moderator");
     }
-
+    
     /**
      * Übergibt ob der Nutzer ein Admin ist
      * 

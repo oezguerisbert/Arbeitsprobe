@@ -7,11 +7,11 @@ abstract class Errors
         23000 => "DUPLICATE ENTRY",
     );
 
-    function get(int $code, string $message)
+    function get(int $code, $originalError)
     {
         if (isset(Errors::messages[$code])) {
             return Errors::messages[$code];
         }
-        return Errors::messages[-1] . " => $message";
+        return Errors::messages[-1] . " => " . $originalError;
     }
 }

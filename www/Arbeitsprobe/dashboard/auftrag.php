@@ -26,7 +26,7 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
         KommentarRepository::add($_SESSION['userid'], $_GET['id'], htmlspecialchars($_POST['comment']));
     }
     if (isset($_POST['amount'])) {
-        AuftragRepository::updateColumn($_SESSION['userid'], "amount", intval($_POST['amount']));
+        AuftragRepository::updateColumn($_GET['id'], "amount", intval($_POST['amount']));
     }
 }
 
