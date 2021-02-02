@@ -11,8 +11,8 @@ require_once './incs/createAlert.func.inc.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kxi-Service</title>
     <?php
-    include './incs/bootstrap.head.inc.php';
-    ?>
+include './incs/bootstrap.head.inc.php';
+?>
 </head>
 <body>
     <div class="container">
@@ -31,7 +31,8 @@ require_once './incs/createAlert.func.inc.php';
                 <?php if (!isset($db_query_result) || sizeof($errors) > 0) {?>
                     <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                         <h5>Wählen sie eine Priorität aus</h5>
-                        <?=createPriorities(PriorityRepository::findAll(), isset($prio) ? $prio : "");?>
+                        <?=createPriorities(PriorityRepository::findAll(), isset($prio) ? $prio : "", true);?>
+                        <?=createInput("amount", (isset($data_ok) && !$data_ok) ? $data["amount"] : "", "number", null, true, "mt-3 p-0 col-4");?>
                         <br />
                         <div class="row">
                             <div class="col-lg-10">

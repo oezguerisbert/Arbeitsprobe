@@ -15,7 +15,7 @@ In diesem Controller wird die Logik für das Ski-Serviceformular übernommen.
 if (isset($_SESSION['userid'])) {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $prio = $_POST['prio'];
-        $amount = $_POST['amount'];
+        $amount = intval($_POST['amount']);
         $errors = checkInput(array("priority" => $prio, "amount" => $amount));
         if (sizeof($errors) === 0) {
             $db_result = AuftragRepository::create(
@@ -23,7 +23,7 @@ if (isset($_SESSION['userid'])) {
                     ":userid" => $_SESSION['userid'],
                     ":serviceid" => ServiceRepository::findByKuerzel(strtolower($service))->getID(),
                     ":prioid" => PriorityRepository::findByKuerzel($prio)->getID(),
-                    ":amount" => intval($amount),
+                    ":amount" => $amount,
                 )
             );
             $db_query_result = $db_result ? "success" : "warning";

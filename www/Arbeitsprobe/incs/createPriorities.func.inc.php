@@ -1,20 +1,20 @@
 <?php
 /**
  * Erstellt die Prioritätetn auf Bootstrap-Basis
- * 
+ *
  * @param array $priorities prioritäten
  * @param string $selected [optional] ausgewählte priorität
- * 
+ *
  * @return string HTML
  */
-function createPriorities(array $priorities, string $selected = "")
+function createPriorities(array $priorities, string $selected = "", bool $required = false)
 {
     $d = "";
     foreach ($priorities as $key => $priority) {
         $name = "prio" . ($priority->getID());
         $kuerzel = $priority->getKuerzel();
         $d .= "<div class=\"custom-control custom-radio\">
-            <input type=\"radio\" id=\"$name\" name=\"prio\" value=\"" . $kuerzel . "\" class=\"custom-control-input\" required " . (strtolower($kuerzel) === strtolower($selected) ? "checked" : "") . ">
+            <input type=\"radio\" id=\"$name\" name=\"prio\" value=\"" . $kuerzel . "\" class=\"custom-control-input\" " . ($required ? "required" : "") . " " . (strtolower($kuerzel) === strtolower($selected) ? "checked" : "") . ">
             <label class=\"custom-control-label\" for=\"$name\">" . $priority->getTitle() . "</label>
         </div>";
     }

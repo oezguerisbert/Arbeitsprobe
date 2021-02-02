@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__.'/../incs/requirements.func.inc.php';
+require_once __DIR__ . '/../incs/requirements.func.inc.php';
+require_once __DIR__ . '/../incs/createInput.func.inc.php';
 if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
     header("Location: ./");
 } else {
@@ -11,7 +12,7 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
     if (isset($_GET['m']) && in_array($_GET['m'], ModusRepository::asArray("kuerzel"))) {
         AuftragRepository::updateModus($_GET['id'], $_GET['m']);
     }
-    if(isset($_POST['servicetype'])){
+    if (isset($_POST['servicetype'])) {
         AuftragRepository::updateColumn($_GET['id'], "serviceid", ServiceRepository::findByKuerzel($_POST['servicetype'])->getID());
     }
     if (isset($_GET['claim'])) {
@@ -22,7 +23,10 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
         AuftragRepository::setVisibility($_GET['id'], $vMode);
     }
     if (isset($_POST['comment'])) {
-        KommentarRepository::add($_SESSION['userid'], $_GET['id'], $_POST['comment']);
+        KommentarRepository::add($_SESSION['userid'], $_GET['id'], htmlspecialchars($_POST['comment']));
+    }
+    if (isset($_POST['amount'])) {
+        AuftragRepository::updateColumn($_SESSION['userid'], "amount", intval($_POST['amount']));
     }
 }
 
@@ -35,7 +39,7 @@ if (!(isset($_SESSION['userid']) && isset($_GET['id']))) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KXI-Service</title>
     <?php
-include __DIR__.'/../incs/bootstrap.head.inc.php';
+include __DIR__ . '/../incs/bootstrap.head.inc.php';
 ?>
     <link rel="stylesheet" href="./style.css" />
 </head>
@@ -51,16 +55,16 @@ include __DIR__.'/../incs/bootstrap.head.inc.php';
             </div>
             <div class="row p-3 pt-5">
                 <?php
-                $auftrag = AuftragRepository::find($_GET['id']);
+$auftrag = AuftragRepository::find($_GET['id']);
 
-                if (!$auftrag) {
-                    echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
+if (!$auftrag) {
+    echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
                                         <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Dieser Auftrag existiert nicht.</div>
                                     </div>";
-                } else {
-                    echo $auftrag;
-                }
-                ?>
+} else {
+    echo $auftrag;
+}
+?>
             </div>
         </div>
         <div class="modal" id="commentModal" tabindex="-1" role="dialog">
@@ -107,13 +111,17 @@ include __DIR__.'/../incs/bootstrap.head.inc.php';
                             <label for="comment">Auftragtyp</label>
                             <select class="col" name="servicetype">
                                 <?php
-                                
-                                    $services = ServiceRepository::findAll();
-                                    foreach ($services as $key => $service) {
-                                        echo "<option value='{$service->getKuerzel()}' " .( $service->getID() === $auftrag->getService()->getID() ? 'selected' : '').">{$service->getTitle()}</option>";
-                                    }
-                                ?>
+
+$services = ServiceRepository::findAll();
+foreach ($services as $key => $service) {
+    echo "<option value='{$service->getKuerzel()}' " . ($service->getID() === $auftrag->getService()->getID() ? 'selected' : '') . ">{$service->getTitle()}</option>";
+}
+?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Auftragtyp</label>
+                            <?=createInput("amount", $auftrag->getAmount(), "number")?>
                         </div>
                     </div>
                     <div class="modal-footer">

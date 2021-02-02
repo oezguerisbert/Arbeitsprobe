@@ -68,6 +68,16 @@ class Auftrag
     }
 
     /**
+     * Übergibt die Anzahl der Aufträge
+     *
+     * @return int amount
+     */
+    public function getAmount(): int
+    {
+        return intval($this->amount);
+    }
+
+    /**
      * Übergibt das Datum des Auftrags
      *
      * @return string datum
@@ -208,7 +218,7 @@ class Auftrag
         return "<div class='card vw-100 text-dark' style='background:{$this->getPriority()->getColor()};'>
         <div class='card-body'>
         <h5 class='card-title d-flex' style='font-size:1rem;'><span class='fa fa-clock mr-1 mt-1' style='font-size:0.8rem;'></span>{$this->getRequestedDate()} Uhr<div class='ml-auto mr-auto'></div></h5>
-          <h5 class='card-title d-flex'>{$this->getService()->getTitle()}<div class='ml-auto mr-auto'></div><span style='font-size:1rem;'>@{$this->getUser()->getUsername()}</span></h5>
+          <h5 class='card-title d-flex'>{$this->getAmount()}x - {$this->getService()->getTitle()}<div class='ml-auto mr-auto'></div><span style='font-size:1rem;'>@{$this->getUser()->getUsername()}</span></h5>
           <h6 class='card-subtitle mb-2 text-muted d-flex text-dark'>{$this->getService()->getDescription()}</h6>
           <p class='card-text'></p>
           {$kommentare}
@@ -235,6 +245,7 @@ class Auftrag
                 <td>{$this->getUser()->getUsername()}</td>
                 <td>{$this->getService()->getTitle()}</td>
                 <td>{$this->getPriority()->getKuerzel()} - {$this->getPriority()->getDays()} Tage</td>
+                <td>{$this->getAmount()}x</td>
                 " . ($withModerator ? "<td>" . ($this->getModerator() != null ? "@" . $this->getModerator()->getUsername() : "<span style='color:gray;font-style:italic;'>not claimed</span>") . "</td>" : "") . "
             </tr>";
     }

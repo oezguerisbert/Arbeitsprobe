@@ -23,12 +23,12 @@ include '../incs/bootstrap.head.inc.php';
             <h2>Dashboard </h2>
             <?php
 
-            if (sizeof($auftraege) < 1) {
-                echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
+if (sizeof($auftraege) < 1) {
+    echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
                             <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Keine Aufträge, <a href='./meine-auftraege.php'>neu laden?</a></div>
                         </div>";
-            } else {
-                ?>
+} else {
+    ?>
                 <div class="row row-cols-3  pl-3 pr-3 justify-content-around">
                     <table class="table col-12 table-bordered table-hover table-striped table-light">
                         <thead class="thead-light">
@@ -37,6 +37,7 @@ include '../incs/bootstrap.head.inc.php';
                             <th scope="col">Benutzername</th>
                             <th scope="col">Service</th>
                             <th scope="col">Priorität</th>
+                            <th scope="col">Amount</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,10 +46,10 @@ include '../incs/bootstrap.head.inc.php';
                     </table>
                 </div>
             <?php
-            }
-            
-            ?>
-            
+}
+
+?>
+
             <div class="row p-5"></div>
         </div>
     </div>

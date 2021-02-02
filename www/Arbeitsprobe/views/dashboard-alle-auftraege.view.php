@@ -37,6 +37,7 @@ include '../incs/bootstrap.head.inc.php';
                             <th scope="col">Benutzername</th>
                             <th scope="col">Service</th>
                             <th scope="col">Priorität</th>
+                            <th scope="col">Anzahl</th>
                             <th scope="col">Admin / Moderator</th>
                         </tr>
                         </thead>
