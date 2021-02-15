@@ -93,7 +93,6 @@ class BaseRepository extends DB
     public static function update(int $id, array $options)
     {
         $className = str_replace("Repository", "", get_called_class());
-
         $result = BaseRepository::run(
             file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")),
             array_merge(array(":id" => $id), $options)
@@ -111,5 +110,16 @@ class BaseRepository extends DB
             "fetch"
         );
         return intval($result['amount']);
+    }
+
+    public static function delete(int $id)
+    {
+        $className = str_replace("Repository", "", get_called_class());
+
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")),
+            array(":id" => $id)
+        );
+        return $result;
     }
 }

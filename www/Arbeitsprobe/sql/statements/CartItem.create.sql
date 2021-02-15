@@ -1,4 +1,19 @@
 INSERT INTO
-    kxi_cart (userid)
-VALUES
-    (:userid);
+    kxi_cartitem (
+        `firstname`,
+        `lastname`,
+        `serviceid`,
+        `gender`,
+        `height`,
+        `birthdate`,
+        `cartid`
+    )
+VALUES(
+    :firstname,
+    :lastname,
+    :serviceid,
+    :gender,
+    :height,
+    :birthdate,
+    :cartid
+);

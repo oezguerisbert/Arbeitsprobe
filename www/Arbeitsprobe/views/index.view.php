@@ -32,7 +32,7 @@ include './incs/bootstrap.head.inc.php';
             <p class="text-justify">
                 Wir sind ein Ski-Unternehmen und bieten verschiedene Projekte an. Wir sind darauf spezialisiert Aufträge hoch professionell auszuführen und bieten die beste Qualität an.
             </p>
-            <div class="row row-cols-3 justify-content-around">
+            <div class="row row-cols-3 justify-content-around" id="products">
                 <?=createServices(ServiceRepository::findAll());?>
             </div>
             <div class="row p-5"></div>

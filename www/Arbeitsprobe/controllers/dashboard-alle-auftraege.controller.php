@@ -18,21 +18,8 @@ if (isset($_SESSION['userid'])) {
         header("Location: ./");
     }
 
-    $auftraege = AuftragRepository::findAll();
+    $tasks = AuftragRepository::findAll();
+    if(!$tasks) $tasks = array();
 } else {
     header("Location: ./");
-}
-
-
-/**
- * Erstellt alle Aufträge für die Auflistung
- */
-function printAuftraege()
-{
-    global $auftraege;
-    foreach ($auftraege as $key => $auftrag) {
-
-        echo $auftrag->toRow();
-    }
-
 }

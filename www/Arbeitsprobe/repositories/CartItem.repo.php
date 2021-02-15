@@ -40,4 +40,20 @@ class CartItemRepository extends BaseRepository
         return $result;
     }
 
+    /**
+     * Findet Warenkorb einträge via User-ID
+     *
+     * @param int $id id des Users
+     */
+    public static function findByUser(int $id)
+    {
+        $className = str_replace("Repository", "", get_called_class());
+        $result = BaseRepository::run(
+            file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")),
+            array(":userid" => $id),
+            $className,
+            "fetchAll"
+        );
+        return $result;
+    }
 }

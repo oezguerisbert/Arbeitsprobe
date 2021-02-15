@@ -1,4 +1,4 @@
 SELECT
     *
 FROM
-    kxi_cart;
+    kxi_cartitem;

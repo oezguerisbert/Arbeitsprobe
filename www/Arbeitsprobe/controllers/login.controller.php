@@ -19,7 +19,8 @@ function printResult()
             $user = UserRepository::checkLogin($data);
             if ($user) {
                 $_SESSION['userid'] = $user->getID();
-                print "<script>document.location.href = './';</script>";
+
+                print "<script>document.location.href = '".(isset($_GET['redirect']) ? "./".$_GET['redirect']: "./")."';</script>";
             } else {
                 $data_errors = array("password" => "Please retry, user/password wrong.");
             }

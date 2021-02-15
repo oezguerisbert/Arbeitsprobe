@@ -3,7 +3,6 @@ class Cart
 {
     private $id;
     private $userid;
-    private $cartid;
     private $createdDate;
     private $isActive;
 
@@ -34,6 +33,44 @@ class Cart
      */
     public function getItems()
     {
-        return CartItemRepository::findByCart(intval($this->id));
+        return CartItemRepository::findByCart($this->id);
     }
+
+    /**
+     * Fügt neue Warenkorb-Items hinzu
+     *
+     * @return resultat
+     */
+    public function addItem($item){
+        return CartItemRepository::create(array_merge(array(":cartid" => $this->getID()), $item));
+    }
+
+    /**
+     * Löscht ein Warenkorb-Item
+     *
+     * @return resultat
+     */
+    public function removeItem(int $itemid){
+        return CartItemRepository::delete($itemid);
+    }
+
+    /**
+     * Updated ein Warenkorb-Item
+     *
+     * @return resultat
+     */
+    public function updateItem(int $itemid, array $values){
+        return CartItemRepository::update($itemid, $values);
+    }
+
+    /**
+     * Setzt einen Auftrag in die Datenbank ein
+     *
+     * @return resultat
+     */
+    public function submit(int $prioid){
+        AuftragRepository::create(array(":prioid" => $prioid, ":cartid" => $this->getID()));
+        CartRepository::deactivate($this->getID());
+    }
+
 }

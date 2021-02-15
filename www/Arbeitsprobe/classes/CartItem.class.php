@@ -8,14 +8,16 @@
 class CartItem
 {
     private $id;
-    private $name;
+    private $firstname;
+    private $lastname;
     private $birthdate;
     private $height;
-    private $cartid;
     private $serviceid;
+    private $cartid;
+    private $gender;
 
     /**
-     * Übergibt die ID des Auftrags
+     * Übergibt die ID des Warenkorb-Items
      *
      * @return mixed id
      */
@@ -25,7 +27,66 @@ class CartItem
     }
 
     /**
-     * Übergibt den Warenkorb des Auftrags
+     * Übergibt den Vornamen des Nutzers
+     *
+     * @return mixed firstname
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Übergibt den Nachnamen des Nutzers
+     *
+     * @return mixed lastname
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Übergibt den Geburtstag des Nutzers
+     *
+     * @return mixed birthdate
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * Übergibt die Höhe des Nutzers
+     *
+     * @return mixed height
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Übergibt den Service des Warenkorb-Items
+     *
+     * @return mixed service
+     */
+    public function getService()
+    {
+        return ServiceRepository::find($this->serviceid);
+    }
+    /**
+     * Übergibt das Geschlecht des Nutzers
+     *
+     * @return mixed gender
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Übergibt den Warenkorb des Warenkorb-Items
      *
      * @return Cart cart
      */
@@ -35,7 +96,7 @@ class CartItem
     }
 
     /**
-     * Übergibt den Auftrrag als fertiges HTML Konstrukt
+     * Übergibt den Auftrag als fertiges HTML Konstrukt
      *
      * @return string HTML-Konstrukt
      */

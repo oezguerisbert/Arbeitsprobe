@@ -33,7 +33,7 @@ class DB
             try {
                 $configFile = __DIR__ . "/../config.json";
                 if (file_exists($configFile)) {
-                    $config = file_get_contents(__DIR__ . "/../config.json");
+                    $config = file_get_contents($configFile);
                     $json = json_decode($config, true);
                     $db = $json['database'];
                     DB::$_servername = $db['host'];
@@ -48,7 +48,8 @@ class DB
                 $_conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
                 DB::$_conn = $_conn;
-                if (!file_exists($_SERVER['DOCUMENT_ROOT'] . "/Arbeitsprobe/migration.lock") && (isset($config) && ($db['migrate'] ?? true))) {
+                $migrationFile = __DIR__ . "/../migration.lock";
+                if (!file_exists($migrationFile) && (isset($config) && ($db['migrate'] ?? true))) {
                     $res = DB::migrate();
                     DB::$_migrated = $res["result"];
                     if (count($res["errors"]) > 0) {
@@ -56,7 +57,7 @@ class DB
                             print_r(array($err[0]), $err[1]);
                         }
                     }
-                    fclose(fopen($_SERVER['DOCUMENT_ROOT'] . "/Arbeitsprobe/migration.lock", "a+"));
+                    fclose(fopen($migrationFile, "a+"));
                     session_destroy();
                 }
             } catch (PDOException $e) {
@@ -103,7 +104,22 @@ class DB
         }
         return array("result" => $result, "errors" => $errors);
     }
-
+    /**
+     * Testing
+     *
+     * Bereitet die Datenbank aufs testing vor.
+     *
+     * @return boolean resultat der Testing-Migration
+     */
+    public static function testing()
+    {
+        if(!isset(DB::reset()['error'])){
+            return DB::migrate();
+        }else {
+            return array("error" => "Reset didn't work well.");
+        }
+    }
+    
     public static function reset()
     {
         $configFile = __DIR__ . "/../config.json";
@@ -118,8 +134,8 @@ class DB
             }
             try {
                 $result = $conn->exec($resetSQL);
-            } catch (Exception $ex) {
-                $result = $ex->getMessage();
+            } catch (PDOException $ex) {
+                $result = array("error" => Errors::get(intval($ex->getCode()), $e));
             }
         }
         return $result;

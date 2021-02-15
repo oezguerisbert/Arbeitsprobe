@@ -111,12 +111,11 @@ if (!$auftrag) {
                             <label for="comment">Auftragtyp</label>
                             <select class="col" name="servicetype">
                                 <?php
-
-$services = ServiceRepository::findAll();
-foreach ($services as $key => $service) {
-    echo "<option value='{$service->getKuerzel()}' " . ($service->getID() === $auftrag->getService()->getID() ? 'selected' : '') . ">{$service->getTitle()}</option>";
-}
-?>
+                                    $services = ServiceRepository::findAll();
+                                    foreach ($services as $key => $service) {
+                                        echo "<option value='{$service->getKuerzel()}' " . ($service->getID() === $auftrag->getService()->getID() ? 'selected' : '') . ">{$service->getTitle()}</option>";
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="form-group">

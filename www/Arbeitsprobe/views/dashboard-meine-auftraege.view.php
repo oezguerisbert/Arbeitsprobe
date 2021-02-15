@@ -23,7 +23,7 @@ include '../incs/bootstrap.head.inc.php';
             <h2>Dashboard </h2>
             <?php
 
-if (sizeof($auftraege) < 1) {
+if (sizeof($tasks) < 1) {
     echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
                             <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Keine Aufträge, <a href='./meine-auftraege.php'>neu laden?</a></div>
                         </div>";
@@ -35,7 +35,7 @@ if (sizeof($auftraege) < 1) {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Benutzername</th>
-                            <th scope="col">Service</th>
+                            <th scope="col">Cart</th>
                             <th scope="col">Priorität</th>
                             <th scope="col">Amount</th>
                         </tr>

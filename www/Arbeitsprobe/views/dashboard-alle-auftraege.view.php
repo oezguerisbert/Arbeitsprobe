@@ -23,7 +23,7 @@ include '../incs/bootstrap.head.inc.php';
             <h2>Dashboard </h2>
             <?php
 
-            if (sizeof($auftraege) < 1) {
+            if (sizeof($tasks) < 1) {
                 echo "<div class=\"mt-5 col-md-12 p-4 vw-100 border bg-light rounded\" style=\"border-color:#bfc0c0;\">
                             <div class=\"p-2 text-center\" style=\"color:#7f7f7f;\">Keine Aufträge, <a href='./alle-auftraege.php'>neu laden?</a></div>
                         </div>";
@@ -35,14 +35,27 @@ include '../incs/bootstrap.head.inc.php';
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Benutzername</th>
-                            <th scope="col">Service</th>
+                            <th scope="col">Cart</th>
                             <th scope="col">Priorität</th>
                             <th scope="col">Anzahl</th>
                             <th scope="col">Admin / Moderator</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php printAuftraege();?>
+                        <?php 
+                            foreach ($tasks as $key => $task) {
+                                ?>
+                                <tr style="cursor: pointer;background:<?=$task->getPriority()->getColor()?>" onclick="location.href= './auftrag.php?id=<?=$task->getID()?>'";>
+                                    <th scope="row"><?=$task->getID()?></th>
+                                    <td><?=$task->getUser()->getUsername()?></td>
+                                    <td><?=$task->getCart()->getID()?></td>
+                                    <td><?=$task->getPriority()->getKuerzel()?> - <?=$task->getPriority()->getDays()?> Tage</td>
+                                    <td><?=$task->getAmount()?>x</td>
+                                    <td><?=$task->getModerator() != null ? "@" . $task->getModerator()->getUsername() : "<span style='color:gray;font-style:italic;'>not claimed</span>"?></td> 
+                                </tr>
+                                <?php
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

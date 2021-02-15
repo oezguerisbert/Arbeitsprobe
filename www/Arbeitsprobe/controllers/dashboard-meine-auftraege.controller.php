@@ -18,8 +18,8 @@ if (isset($_SESSION['userid'])) {
         header("Location: ./");
     }
 
-    $auftraege = AuftragRepository::findByModerator($user->getID());
-    if(!$auftraege) $auftraege = array();
+    $tasks = AuftragRepository::findByModerator($user->getID());
+    if(!$tasks) $tasks = array();
 } else {
     header("Location: ./");
 }
@@ -30,10 +30,10 @@ if (isset($_SESSION['userid'])) {
  */
 function printAuftraege()
 {
-    global $auftraege;
-    foreach ($auftraege as $key => $auftrag) {
+    global $tasks;
+    foreach ($tasks as $key => $task) {
 
-        echo $auftrag->toRow(false);
+        echo $task->toRow(false);
     }
 
 }

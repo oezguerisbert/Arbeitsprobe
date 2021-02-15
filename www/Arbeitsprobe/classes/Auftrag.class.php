@@ -8,10 +8,8 @@
 class Auftrag
 {
     private $id;
-    private $userid;
     private $prioid;
-    private $serviceid;
-    private $amount;
+    private $cartid;
     private $request_date;
     private $moderatorid;
     private $visible;
@@ -34,7 +32,7 @@ class Auftrag
      */
     public function getUser(): User
     {
-        return UserRepository::find($this->userid);
+        return $this->getCart()->getUser();
     }
 
     /**
@@ -58,13 +56,13 @@ class Auftrag
     }
 
     /**
-     * Übergibt den Service des Auftrags
+     * Übergibt den Warenkorb des Auftrags
      *
-     * @return Service service
+     * @return Cart cart
      */
-    public function getService(): Service
+    public function getCart(): Cart
     {
-        return ServiceRepository::find($this->serviceid);
+        return CartRepository::findAny(intval($this->cartid));
     }
 
     /**
@@ -74,7 +72,7 @@ class Auftrag
      */
     public function getAmount(): int
     {
-        return intval($this->amount);
+        return count($this->getCart()->getItems());
     }
 
     /**
@@ -215,12 +213,14 @@ class Auftrag
                 <div class='p-2 text-center' style='color:rgba(0,0,0,0.5);'>Keine Kommentare. {$allowCommentHref}</div>
             </div>";
         }
-        return "<div class='card vw-100 text-dark' style='background:{$this->getPriority()->getColor()};'>
+        $result ="<div class='card vw-100 text-dark' style='background:{$this->getPriority()->getColor()};'>
         <div class='card-body'>
-        <h5 class='card-title d-flex' style='font-size:1rem;'><span class='fa fa-clock mr-1 mt-1' style='font-size:0.8rem;'></span>{$this->getRequestedDate()} Uhr<div class='ml-auto mr-auto'></div></h5>
-          <h5 class='card-title d-flex'>{$this->getAmount()}x - {$this->getService()->getTitle()}<div class='ml-auto mr-auto'></div><span style='font-size:1rem;'>@{$this->getUser()->getUsername()}</span></h5>
-          <h6 class='card-subtitle mb-2 text-muted d-flex text-dark'>{$this->getService()->getDescription()}</h6>
-          <p class='card-text'></p>
+        <h5 class='card-title d-flex' style='font-size:1rem;'><span class='fa fa-clock mr-1 mt-1' style='font-size:0.8rem;'></span>{$this->getRequestedDate()} Uhr<div class='ml-auto'><span style='font-size:1rem;'>@{$this->getUser()->getUsername()}</span></div></h5>";
+        foreach($this->getCart()->getItems() as $i => $item) {
+            $result .= "<h6 class='card-title d-flex'>{$item->getService()->getTitle()}<div class='ml-auto mr-auto'></div></h6>
+          <span class='card-subtitle mb-2 text-muted d-flex text-dark'>{$item->getService()->getDescription()}</span>";
+        }
+        $result .= "<p class='card-text'></p>
           {$kommentare}
           <div class='d-flex w-100 '>
             <div class='ml-auto'></div>
@@ -231,6 +231,7 @@ class Auftrag
           </div>
         </div>
       </div>";
+      return $result;
     }
     /**
      * Übergibt ob den Auftrag als Reihe für die Auflistung der Aufträge
@@ -243,7 +244,7 @@ class Auftrag
             <tr style=\"cursor: pointer;background:{$this->getPriority()->getColor()}\" onclick=\"location.href= './auftrag.php?id={$this->getID()}'\";>
                 <th scope=\"row\">" . $this->getID() . "</th>
                 <td>{$this->getUser()->getUsername()}</td>
-                <td>{$this->getService()->getTitle()}</td>
+                <td>{$this->getCart()->getID()}</td>
                 <td>{$this->getPriority()->getKuerzel()} - {$this->getPriority()->getDays()} Tage</td>
                 <td>{$this->getAmount()}x</td>
                 " . ($withModerator ? "<td>" . ($this->getModerator() != null ? "@" . $this->getModerator()->getUsername() : "<span style='color:gray;font-style:italic;'>not claimed</span>") . "</td>" : "") . "

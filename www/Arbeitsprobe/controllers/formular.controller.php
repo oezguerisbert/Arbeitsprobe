@@ -14,18 +14,41 @@ In diesem Controller wird die Logik für das Ski-Serviceformular übernommen.
 
 if (isset($_SESSION['userid'])) {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $prio = $_POST['prio'];
         $amount = intval($_POST['amount']);
-        $errors = checkInput(array("priority" => $prio, "amount" => $amount));
+        $birthdate = intval($_POST['birthdate']);
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $birthdate = $_POST['birthdate'];
+        $gender = $_POST['gender'];
+        $height = $_POST['height'];
+        $serviceid = ServiceRepository::findByKuerzel(strtolower($_GET['service']))->getID();
+        $errors = checkInput(
+            array(
+                "firstname" => $firstname,
+                "lastname" => $lastname,
+                "birthdate" => $birthdate,
+                "gender" => $gender,
+                "height" => $height,
+                "service" => $service
+            )
+        );
         if (sizeof($errors) === 0) {
-            $db_result = AuftragRepository::create(
+            $cart = CartRepository::findByUser(intval($_SESSION['userid']));
+            if(!$cart){
+                CartRepository::create(array(":userid"=>intval($_SESSION['userid'])));
+                $cart = CartRepository::findByUser(intval($_SESSION['userid']));
+            }
+            $cart->addItem(
                 array(
-                    ":userid" => $_SESSION['userid'],
-                    ":serviceid" => ServiceRepository::findByKuerzel(strtolower($service))->getID(),
-                    ":prioid" => PriorityRepository::findByKuerzel($prio)->getID(),
-                    ":amount" => $amount,
+                    ":serviceid" => $serviceid,
+                    ":firstname" => $firstname,
+                    ":lastname" => $lastname,
+                    ":gender" => $gender,
+                    ":height" => $height,
+                    ":birthdate" => $birthdate
                 )
             );
+
             $db_query_result = $db_result ? "success" : "warning";
         }
     }
@@ -42,7 +65,7 @@ function printResult()
     global $errors;
     global $prio;
     if (isset($db_query_result) && sizeof($errors) === 0) {
-        echo createAlert($db_query_result, "✨ Perfekt!", array("Wir werden Sie am " . (date("d.m.Y", strtotime("+" . getPrioDays($prio) . " days"))) . " (in " . getPrioDays($prio) . " Tagen) kontaktieren."));
+        echo createAlert($db_query_result, "✨ Perfekt!", array("Super, we added the Item into the <a href='./cart.php'>Cart</a>."));
         echo "<a class=\"btn btn-secondary\" href=\"javascript:document.location.href= './';\">zurück</a>";
     } else if (isset($errors) && sizeof($errors) > 0) {
         echo createAlert("warning", "Opps!", $errors);

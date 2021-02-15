@@ -1,2 +1,2 @@
 INSERT INTO
-    kxi_auftraege (prioid, serviceid, userid, amount) VALUE (:prioid, :serviceid, :userid, :amount);
+    kxi_auftraege (prioid, cartid) VALUE (:prioid, :cartid);
