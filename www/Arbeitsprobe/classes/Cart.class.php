@@ -41,7 +41,8 @@ class Cart
      *
      * @return resultat
      */
-    public function addItem($item){
+    public function addItem($item)
+    {
         return CartItemRepository::create(array_merge(array(":cartid" => $this->getID()), $item));
     }
 
@@ -50,7 +51,8 @@ class Cart
      *
      * @return resultat
      */
-    public function removeItem(int $itemid){
+    public function removeItem(int $itemid)
+    {
         return CartItemRepository::delete($itemid);
     }
 
@@ -59,7 +61,8 @@ class Cart
      *
      * @return resultat
      */
-    public function updateItem(int $itemid, array $values){
+    public function updateItem(int $itemid, array $values)
+    {
         return CartItemRepository::update($itemid, $values);
     }
 
@@ -68,9 +71,14 @@ class Cart
      *
      * @return resultat
      */
-    public function submit(int $prioid){
-        AuftragRepository::create(array(":prioid" => $prioid, ":cartid" => $this->getID()));
-        CartRepository::deactivate($this->getID());
+    public function submit(int $prioid, $date)
+    {
+        $task = AuftragRepository::create(array(":prioid" => $prioid, ":cartid" => $this->getID(), ":requestdate" => $date));
+        if ($task) {
+            CartRepository::deactivate($this->getID());
+        } else {
+            echo Errors::unkown("what");
+        }
     }
 
 }

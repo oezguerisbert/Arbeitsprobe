@@ -14,10 +14,8 @@ In diesem Controller wird die Logik für das Ski-Serviceformular übernommen.
 
 if (isset($_SESSION['userid'])) {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $amount = intval($_POST['amount']);
-        $birthdate = intval($_POST['birthdate']);
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
+        $firstname = htmlspecialchars($_POST['firstname']);
+        $lastname = htmlspecialchars($_POST['lastname']);
         $birthdate = $_POST['birthdate'];
         $gender = $_POST['gender'];
         $height = $_POST['height'];
