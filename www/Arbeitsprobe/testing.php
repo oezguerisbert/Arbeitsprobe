@@ -19,20 +19,20 @@ if ($user) {
         var_dump($cart);
     }
     $item1 = array(
-        ":firstname" => "Özgür",
-        ":lastname" => "Isbert",
-        ":gender" => "male",
-        ":height" => 172,
-        ":birthdate" => date("Y-m-d", strtotime("13.05.1996")),
-        ":serviceid" => ServiceRepository::findByKuerzel("slalom")->getID(),
-    );
-    $item2 = array(
         ":firstname" => "Max",
         ":lastname" => "Mustermann",
         ":gender" => "male",
         ":height" => 190,
         ":birthdate" => date("Y-m-d", strtotime("01.01.1980")),
         ":serviceid" => ServiceRepository::findByKuerzel("goofy")->getID(),
+    );
+    $item2 = array(
+        ":firstname" => "Özgür",
+        ":lastname" => "Isbert",
+        ":gender" => "male",
+        ":height" => 172,
+        ":birthdate" => date("Y-m-d", strtotime("13.05.1996")),
+        ":serviceid" => ServiceRepository::findByKuerzel("slalom")->getID(),
     );
     $item3 = array(
         ":firstname" => "Julia",
