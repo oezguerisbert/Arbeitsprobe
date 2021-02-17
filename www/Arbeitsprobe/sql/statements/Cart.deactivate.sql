@@ -1,0 +1,1 @@
+UPDATE kxi_user_cart SET `isActive` = 0 WHERE id = :id;
