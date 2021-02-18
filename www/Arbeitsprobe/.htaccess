@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^config.json$ index.php [L]
+RewriteRule ^migration.lock$ index.php [L]
+RewriteRule ^\.prettierrc$ index.php [L]
