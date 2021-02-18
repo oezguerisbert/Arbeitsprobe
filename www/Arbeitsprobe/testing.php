@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/incs/requirements.func.inc.php';
 if (isset($_GET['withReset'])) {
-    DB::testing();
+    var_dump(DB::testing());
 }
 ?>
 <title>KXI-Service | Testing</title>

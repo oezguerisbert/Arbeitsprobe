@@ -95,9 +95,16 @@ class DB
             $c = DB::connection();
             try {
                 $sqlResult = $c->exec($sql);
-
+                if(!$sqlResult){
+                    $potentialError = $c->errorInfo();
+                    if($potentialError[0] === '00000' || $potentialError[0] === '01000'){
+                        $sqlResult = true;
+                    }else {
+                        throw new Error(Errors::unknown($potentialError));
+                    }
+                }
                 $result &= $sqlResult;
-            } catch (\Exception $e) {
+            } catch (PDOException $e) {
                 $errors[] = array($sql, $e->getMessage());
             }
 
@@ -165,8 +172,6 @@ class DB
         $conn = DB::connection();
         $result = null;
         try {
-
-            $conn->beginTransaction();
             $stmt = $conn->prepare($sql);
             $result2 = null;
             if ($values !== null) {
@@ -183,11 +188,13 @@ class DB
             } else {
                 $result = $result2;
             }
-
-            $conn->commit();
+            $potentialError = $conn->errorInfo();
+            if($potentialError[0] === '00000' || $potentialError[0] === '01000'){
+            }else {
+                throw new Error(Errors::unknown($potentialError));
+            }
         } catch (PDOException $e) {
             $result = array("error" => Errors::get(intval($e->getCode()), $e));
-            $conn->rollBack();
         }
 
         return $result;
