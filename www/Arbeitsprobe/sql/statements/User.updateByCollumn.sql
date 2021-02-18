@@ -1,6 +1,6 @@
 UPDATE
     users
 SET
-    col = :value
+    col = :val
 WHERE
     id = :id;

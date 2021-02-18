@@ -76,39 +76,32 @@ if ($mode === "edit") {
     {
 
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            $data["username"] = htmlspecialchars($_POST['username']);
-            $data["vorname"] = htmlspecialchars($_POST['vorname']);
-            $data["nachname"] = htmlspecialchars($_POST['nachname']);
-            $data["email"] = htmlspecialchars($_POST['email']);
+            $data[":username"] = htmlspecialchars($_POST['username']);
+            $data[":firstname"] = htmlspecialchars($_POST['vorname']);
+            $data[":lastname"] = htmlspecialchars($_POST['nachname']);
+            $data[":email"] = htmlspecialchars($_POST['email']);
             if (isset($_POST['usertype'])) {
-                $data["usertype"] = htmlspecialchars($_POST['usertype']);
+                $data[":usertype"] = htmlspecialchars($_POST['usertype']);
+            }else {
+                $data[":usertype"] = 'admin';
             }
-            $data["phone"] = htmlspecialchars($_POST['phone']);
+            $data[":phone"] = htmlspecialchars($_POST['phone']);
             $data_errors = checkInput($data);
             $data_ok = sizeof($data_errors) == 0;
             $data_errors = array();
-            $db_query_result2 = false;
-            foreach ($data as $dk => $dv) {
-                $db_query_result = UserRepository::updateByCollumn(intval($_GET['id']), $dk, $dv);
-                if (isset($db_query_result['error'])) {
-                    switch ($db_query_result['error']) {
-                        case 'DUPLICATE ENTRY':
-                            $data_errors[] = Errors::cantUpdate($dk, $dv, "already exists");
-                            break;
-                        default:
-                            $data_errors[] = Errors::unknown($db_query_result['error']);
-                            break;
-                    }
-                } else {
-                    $db_query_result2 = $db_query_result2 && $db_query_result;
-                }
-                if (!$db_query_result2) {
-                    break;
+            $db_query_result = UserRepository::updateAll(intval($_GET['id']), $data);
+            if (isset($db_query_result['error'])) {
+                switch ($db_query_result['error']) {
+                    case 'DUPLICATE ENTRY':
+                        $data_errors[] = Errors::cantUpdate($dk, $dv, "already exists");
+                        break;
+                    default:
+                        $data_errors[] = Errors::unknown($db_query_result['error']);
+                        break;
                 }
             }
-
             if ($db_query_result && !isset($db_query_result['error'])) {
-                echo createAlert("success", "Updated!", array("The User '" . $data["username"] . "' was updated successfully!"), false);
+                echo createAlert("success", "Updated!", array("The User '" . $data[":username"] . "' was updated successfully!"), false);
             } else if (isset($data_errors) && sizeof($data_errors) > 0) {
                 echo createAlert("danger", "Opps!", $data_errors, false);
             }

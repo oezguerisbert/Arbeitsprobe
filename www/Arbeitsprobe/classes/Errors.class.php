@@ -11,7 +11,7 @@ abstract class Errors
 
     function unknown($error)
     {
-        return "There was an uknown error: <br />" . $error;
+        return "There was an unknown error: <br />" . $error;
     }
 
     function cantUpdate($column, $value, $reason)

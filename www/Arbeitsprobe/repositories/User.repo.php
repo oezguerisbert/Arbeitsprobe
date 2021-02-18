@@ -47,10 +47,10 @@ class UserRepository extends BaseRepository
     public static function updateByCollumn(int $id, string $column, $value)
     {
         $className = str_replace("Repository", "", get_called_class());
-
+        $sql = str_replace("col", $column, file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql")));
         $result = BaseRepository::run(
-            str_replace("col", "`$column`", file_get_contents(BaseRepository::findSQLFile($className . "." . __FUNCTION__ . ".sql"))),
-            array_merge(array(":id" => $id), array(":val" => $value))
+            $sql,
+            array(":id" => $id, ":val" => $value)
         );
         return $result;
     }
